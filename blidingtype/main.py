@@ -1,7 +1,22 @@
+import sqlite3
 import sys
 import PyQt5.QtWidgets as qtw
 import PyQt5.QtGui as qtg
 from checks import check_password, check_email, check_login
+
+
+def entry_to_db(login: str, email: str, password):  # запись данных пользователя в базу данных
+    try:
+        con = sqlite3.connect('database.sqlite')
+        cur = con.cursor()
+        request = ("INSERT INTO people (login, email, password) "
+                   "VALUES") + f" (\'{login}\', \'{email}\', \'{password}\')"
+        print(request)
+        cur.execute(request)
+        con.commit()
+        con.close()
+    except Exception as er:
+        print(er)
 
 
 class WindowRegistration(qtw.QWidget):
@@ -17,7 +32,7 @@ class WindowRegistration(qtw.QWidget):
         self.login_edit = qtw.QLineEdit(self)
         self.email_edit = qtw.QLineEdit(self)
         self.password_edit = qtw.QLineEdit(self)
-        self.enter_button = qtw.QPushButton('Регистрация', clicked=lambda: self.registration())
+        self.enter_button = qtw.QPushButton('Регистрация', clicked=lambda: self.data_validity_check())
         self.error_label = qtw.QLabel(self)
 
         self.form_layout.addRow('Введите логин:', self.login_edit)
@@ -29,13 +44,13 @@ class WindowRegistration(qtw.QWidget):
     def initUI(self):
         pass
 
-    def registration(self):
+    def data_validity_check(self):  # проверка правильности ввода данных
         login = self.login_edit.text()
         email = self.email_edit.text()
         password = self.password_edit.text()
         text_error = ''
 
-        try:  # проверка пароля
+        try:  # check password
             check_password.check_password(password)
         except check_password.LengthError:
             text_error = 'Пароль должен быть длинной не менее 8 символов'
@@ -47,20 +62,26 @@ class WindowRegistration(qtw.QWidget):
             text_error = 'Пароль не должен содержать комбинации символов'
         except check_password.SpaceError:
             text_error = 'Пароль не должен содержать пробелов'
-        finally:
-            self.error_label.setText(text_error)
 
-        try:  # проверка email
+        try:  # check email
             check_email.check_email(email)
         except check_email.UnCorrectEmail:
-            self.error_label.setText('Email введён не корректно')
+            text_error = 'Email введён не корректно'
+        except check_email.EmailInDb:
+            text_error = 'Этот email уже зарегистрирован'
 
-        try:  # проверка логина
+        try:  # check login
             check_login.check_login(login)
         except check_login.LetterError:
-            self.error_label.setText('Логин должен состоять из символов a-z 0-9  . - _')
+            text_error = 'Логин должен состоять из символов a-z 0-9  . - _'
         except check_login.LenError:
-            self.error_label.setText('Длинна логина больше трёх символов')
+            text_error = 'Длинна логина больше трёх символов'
+        except check_login.LoginInDb:
+            text_error = 'Этот логин уже занят'
+
+        self.error_label.setText(text_error)  # записываем ошибку в корректности данных, в так сказать, статус бар
+        if self.error_label.text() == '':
+            entry_to_db(login, email, password)
 
 
 if __name__ == '__main__':

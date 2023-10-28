@@ -2,33 +2,30 @@ letter_combinations = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm', 'йцукенгшщ
 
 
 class PasswordError(Exception):
-    def __init__(self, er):
-        super().__init__(er)
+    pass
 
 
 class LengthError(PasswordError):
-    def __init__(self, er):
-        super().__init__(er)
+    pass
 
 
 class LetterError(PasswordError):
-    def __init__(self, er):
-        super().__init__(er)
+    pass
 
 
 class DigitError(PasswordError):
-    def __init__(self, er):
-        super().__init__(er)
+    pass
 
 
 class SequenceError(PasswordError):
-    def __init__(self, er):
-        super().__init__(er)
+    pass
+
 
 class SpaceError(Exception):
     pass
 
-def check_password(password):
+
+def check_password(password):  # проверка написания пароля
     if ' ' in password:
         raise SpaceError('SpaceError')
     if not (len(password) > 8):
@@ -45,5 +42,5 @@ def check_password(password):
                 letter_combinations[
                     5] or password[i:i + 3].lower() in letter_combinations[6]:
             raise SequenceError('SequenceError')
-    else:
-        return 'ok'
+
+    return 'ok'

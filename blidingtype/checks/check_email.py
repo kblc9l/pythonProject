@@ -1,5 +1,3 @@
-import sqlite3
-
 from email_validate import \
     validate  # https://docs-python.ru/packages/modul-validate-email-python/  ссылка на этот модуль проверки email
 

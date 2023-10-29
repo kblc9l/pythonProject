@@ -16,5 +16,5 @@ def check_login(login):  # проверка правильности напис�
     for i in login.lower():
         if i not in 'qwertyuiopasdfghjklzxcvbnm._-1234567890':
             raise LetterError()
-    registration.check_login_in_db(login)
-    # проверка наличие в бд
+    registration.check_login_in_db(login)  # проверка наличие в бд
+

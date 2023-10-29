@@ -3,20 +3,7 @@ import sys
 import PyQt5.QtWidgets as qtw
 import PyQt5.QtGui as qtg
 from checks import check_password, check_email, check_login
-
-
-def entry_to_db(login: str, email: str, password):  # запись данных пользователя в базу данных
-    try:
-        con = sqlite3.connect('database.sqlite')
-        cur = con.cursor()
-        request = ("INSERT INTO people (login, email, password) "
-                   "VALUES") + f" (\'{login}\', \'{email}\', \'{password}\')"
-        print(request)
-        cur.execute(request)
-        con.commit()
-        con.close()
-    except Exception as er:
-        print(er)
+from work_with_db import registration
 
 
 class WindowRegistration(qtw.QWidget):
@@ -67,7 +54,7 @@ class WindowRegistration(qtw.QWidget):
             check_email.check_email(email)
         except check_email.UnCorrectEmail:
             text_error = 'Email введён не корректно'
-        except check_email.EmailInDb:
+        except registration.EmailInDb:
             text_error = 'Этот email уже зарегистрирован'
 
         try:  # check login
@@ -76,12 +63,12 @@ class WindowRegistration(qtw.QWidget):
             text_error = 'Логин должен состоять из символов a-z 0-9  . - _'
         except check_login.LenError:
             text_error = 'Длинна логина больше трёх символов'
-        except check_login.LoginInDb:
+        except registration.LoginInDb:
             text_error = 'Этот логин уже занят'
 
         self.error_label.setText(text_error)  # записываем ошибку в корректности данных, в так сказать, статус бар
         if self.error_label.text() == '':
-            entry_to_db(login, email, password)
+            registration.entry_to_db(login, email, password)  # записываем данные в бд
 
 
 if __name__ == '__main__':

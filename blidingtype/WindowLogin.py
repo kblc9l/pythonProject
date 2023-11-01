@@ -1,6 +1,8 @@
 import sys
 import PyQt5.QtWidgets as qtw
 import PyQt5.QtGui as qtg
+from PyQt5 import uic
+
 from work_with_db import login as lg
 from blidingtype import WindowRegistration
 
@@ -15,23 +17,8 @@ class WindowLogin(qtw.QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
+        uic.loadUi('designs/login.ui', self)
         self.form_layout = qtw.QFormLayout()
-        self.setLayout(self.form_layout)
-
-        self.label_1 = qtw.QLabel('Вход в аккаунт')
-        self.label_1.setFont(qtg.QFont('Noto Sans', 20, 400))
-
-        self.login_edit = qtw.QLineEdit(self)
-        self.password_edit = qtw.QLineEdit(self)
-        self.enter_button = qtw.QPushButton('Вход', clicked=lambda: self.data_validity_check())
-        self.error_label = qtw.QLabel(self)
-        self.registration_button = qtw.QPushButton('Создать аккаунт', clicked=lambda: open_registration_window())
-
-        self.form_layout.addRow('Введите логин:', self.login_edit)
-        self.form_layout.addRow('Введите пароль:', self.password_edit)
-        self.form_layout.addRow(self.enter_button)
-        self.form_layout.addRow('              ', self.registration_button)
-        self.form_layout.addRow(self.error_label)
 
     def initUI(self):
         pass

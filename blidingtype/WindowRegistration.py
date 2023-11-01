@@ -1,12 +1,8 @@
-import sqlite3
 import sys
 import PyQt5.QtWidgets as qtw
 import PyQt5.QtGui as qtg
 from checks import check_password, check_email, check_login
 from work_with_db import registration
-from blidingtype import WindowLogin
-
-
 
 
 class WindowRegistration(qtw.QWidget):

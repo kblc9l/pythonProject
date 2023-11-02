@@ -1,7 +1,7 @@
 import sys
 import PyQt5.QtWidgets as qtw
 from PyQt5 import QtGui
-from windowlogin_ui import Ui_MainWindow
+from windowmain_ui import Ui_MainWindow
 import colors
 
 def enterButton(button):

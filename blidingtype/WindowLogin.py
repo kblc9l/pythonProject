@@ -1,7 +1,7 @@
 import sys
 import PyQt5.QtWidgets as qtw
 from work_with_db import login as lg
-from blidingtype.windowlogin_2_ui import Ui_MainWindow
+from blidingtype.windowlogin_ui import Ui_MainWindow
 
 from blidingtype import WindowRegistration
 import colors

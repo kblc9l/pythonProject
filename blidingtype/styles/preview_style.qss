@@ -63,10 +63,20 @@
 
 #login_button{
     background-color: background-dominant1;
-    color: #000;
+    color: background1000;
+}
+
+#login_button:hover{
+    color: background1000;
+	background-color: background-dominant2;
 }
 
 #registration_button{
     background-color: background-dominant2;
+    color: background1000;
+}
+
+#registration_button:hover{
+    background-color: background-dominant1;
     color: background1000;
 }

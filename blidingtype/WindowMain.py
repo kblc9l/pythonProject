@@ -2,7 +2,7 @@ import sys
 import PyQt5.QtWidgets as qtw
 from PyQt5 import QtGui
 from windowlogin_ui import Ui_MainWindow
-from colors import COLOR
+import colors
 
 def enterButton(button):
     button.setFocus()
@@ -192,15 +192,8 @@ class WindowMain(qtw.QMainWindow):
 if __name__ == '__main__':
     app = qtw.QApplication(sys.argv)
     color = 'orange'
-    with open('styles/main_style.qss', 'r') as style_file:
-        style_file = style_file.read()
-        style_file = style_file.replace('background1000', COLOR[color]['background1000'])
-        style_file = style_file.replace('background500', COLOR[color]['background500'])
-        style_file = style_file.replace('background250', COLOR[color]['background250'])
-        style_file = style_file.replace('background-dominant1', COLOR[color]['background-dominant1'])
-        style_file = style_file.replace('background-dominant2', COLOR[color]['background-dominant2'])
-        style_file = style_file.replace('warning', COLOR[color]['warning'])
-
+    style_file = colors.rewrite_qss('styles/main_style.qss', color)
+    app.setStyleSheet(style_file)
     app.setStyleSheet(style_file)
     ex1 = WindowMain()
     ex1.showMaximized()

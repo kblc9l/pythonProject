@@ -1,0 +1,119 @@
+@font-face {
+    font-family: "Noto_Sans_Regular";
+    src: url("fonts/NotoSans-Regular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "NotoSans-Italic";
+    src: url("fonts/NotoSans-Italic.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 400;
+}
+
+
+* {
+    font-family: 'Noto_Sans_Regular';
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: background250;
+}
+
+#centralwidget{
+    background-color: background1000;
+}
+
+#title{
+    font-size: 72px;
+    color: background-dominant1;
+}
+
+#label_1{
+    font-size: 48px;
+}
+
+
+#login_edit{
+	font-size: 27px;
+	color: #808080;
+	padding: 14px 28px;
+	border: 0px;
+	border-bottom: 1px solid #808080;
+	background-color: background1000;
+}
+
+#login_edit::focus{
+	border: 1px solid #808080;
+	border-radius: 5px;
+}
+
+#password_edit{
+	font-size: 27px;
+	color: #808080;
+	padding: 14px 28px;
+	border: 0px;
+	border-bottom: 1px solid #808080;
+	background-color: background1000;
+}
+
+#password_edit::focus{
+	border: 1px solid #808080;
+	border-radius: 5px;
+}
+#email_edit{
+	font-size: 27px;
+	color: #808080;
+	padding: 14px 28px;
+	border: 0px;
+	border-bottom: 1px solid #808080;
+	background-color: background1000;
+}
+
+#email_edit::focus{
+	border: 1px solid #808080;
+	border-radius: 5px;
+}
+
+#register_button{
+	border-radius: 5px;
+	color: #fff;
+	background-color: background500;
+	font-size: 27px;
+	padding: 14px 24px;
+
+}
+#register_button::hover{
+	background-color: background-dominant1;
+	color: background500;
+}
+
+
+
+#login_button{
+    background-color: background1000;
+    color: background-dominant1;
+    font-family: NotoSans-Italic;
+    font-style: italic;
+}
+
+#login_button:hover{
+    color: background-dominant2;
+}
+
+#error_label{
+    color: background-dominant2;
+    font-size: 20px;
+}
+
+#error_container{
+    background-color: warning;
+    border-radius: 5px;
+    padding: 14px 14px;
+}
+
+#error{
+    background-color: warning;
+    border: none;
+}

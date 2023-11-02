@@ -1,8 +1,20 @@
+@font-face {
+    font-family: "Noto_Sans_Regular";
+    src: url("fonts/NotoSans-Regular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
 
+@font-face {
+    font-family: "Noto_Sans_ExtraBold";
+    src: url("fonts/NotoSans-ExtraBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 800;
+}
 
 
 * {
-    font-family: '__Noto_Sans_Mono_14c4eb', '__Noto_Sans_Mono_Fallback_14c4eb';
+    font-family: 'Noto_Sans_Regular';
     padding: 0;
     margin: 0;
     box-sizing: border-box;

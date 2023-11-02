@@ -192,7 +192,7 @@ class WindowMain(qtw.QMainWindow):
 if __name__ == '__main__':
     app = qtw.QApplication(sys.argv)
 
-    with open('styles/style.qss', 'r') as style_file:
+    with open('styles/main_style.qss', 'r') as style_file:
         style_file = style_file.read()
         style_file = style_file.replace('background1000', '#1b1b1b')
         style_file = style_file.replace('background500', '#292929')

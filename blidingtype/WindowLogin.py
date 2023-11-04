@@ -7,16 +7,10 @@ from blidingtype import WindowRegistration
 import colors
 
 
-def open_registration_window():
-    ex1.close()
-    ex2 = WindowRegistration.WindowRegistration()
-    ex2.show()
-
-
 class WindowLogin(qtw.QMainWindow):
     def __init__(self):
         super().__init__()
-
+        self.register = None
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.form_layout = qtw.QFormLayout()
@@ -25,7 +19,12 @@ class WindowLogin(qtw.QMainWindow):
         self.ui.registration_edit.clicked.connect(self.go_to_registration)
 
     def go_to_registration(self):  # переход к окну регистрации
-        pass
+        color = 'orange'
+        style_file2 = colors.rewrite_qss('styles/registration_style.qss', color)
+        app.setStyleSheet(style_file2)
+        self.register = WindowRegistration.WindowRegistration()
+        self.register.showMaximized()
+        self.close()
 
     def hide_error(self):  # скрыть блок ошибки
         self.ui.error_label.hide()
@@ -66,4 +65,5 @@ if __name__ == '__main__':
     app.setStyleSheet(style_file)
     ex1 = WindowLogin()
     ex1.showMaximized()
+
     sys.exit(app.exec())

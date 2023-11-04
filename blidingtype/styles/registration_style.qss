@@ -89,8 +89,6 @@
 	color: background500;
 }
 
-
-
 #login_button{
     background-color: background1000;
     color: background-dominant1;

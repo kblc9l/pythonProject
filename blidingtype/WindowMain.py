@@ -4,6 +4,7 @@ from PyQt5 import QtGui
 from windowmain_ui import Ui_MainWindow
 import colors
 
+
 def enterButton(button):
     button.setFocus()
 

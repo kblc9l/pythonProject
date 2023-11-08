@@ -4,6 +4,7 @@ from work_with_db import login as lg
 from blidingtype.windowlogin_ui import Ui_MainWindow
 
 from blidingtype import WindowRegistration
+from blidingtype import WindowMain
 import colors
 
 
@@ -19,12 +20,13 @@ class WindowLogin(qtw.QMainWindow):
         self.ui.registration_edit.clicked.connect(self.go_to_registration)
 
     def go_to_registration(self):  # переход к окну регистрации
+        global app
         color = 'orange'
-        style_file2 = colors.rewrite_qss('styles/registration_style.qss', color)
-        app.setStyleSheet(style_file2)
+        # style_file2 = colors.rewrite_qss('styles/registration_style.qss', color)
+        # app.setStyleSheet(style_file2)
         self.register = WindowRegistration.WindowRegistration()
         self.register.showMaximized()
-        self.close()
+        self.hide()
 
     def hide_error(self):  # скрыть блок ошибки
         self.ui.error_label.hide()
@@ -52,7 +54,11 @@ class WindowLogin(qtw.QMainWindow):
 
         if text_error == '':
             self.hide_error()
-            pass  # открывание главного окна
+            style_file_main = colors.rewrite_qss('styles/main_style.qss', color)
+            app.setStyleSheet(style_file_main)
+            ex3 = WindowMain.WindowMain()
+            ex3.showMaximized()
+            ex1.close()
 
         self.ui.error_label.setText(text_error)
 
@@ -61,7 +67,6 @@ if __name__ == '__main__':
     app = qtw.QApplication(sys.argv)
     color = 'orange'
     style_file = colors.rewrite_qss('styles/login_style.qss', color)
-    app.setStyleSheet(style_file)
     app.setStyleSheet(style_file)
     ex1 = WindowLogin()
     ex1.showMaximized()

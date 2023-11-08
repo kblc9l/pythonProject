@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1840</width>
-    <height>910</height>
+    <height>1008</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -172,7 +172,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>5</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="test">
           <layout class="QVBoxLayout" name="verticalLayout">
@@ -283,7 +283,7 @@
                       <property name="minimumSize">
                        <size>
                         <width>0</width>
-                        <height>180</height>
+                        <height>90</height>
                        </size>
                       </property>
                       <property name="maximumSize">
@@ -295,12 +295,15 @@
                       <property name="text">
                        <string/>
                       </property>
+                      <property name="alignment">
+                       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                      </property>
                      </widget>
                     </item>
                    </layout>
                   </widget>
                  </item>
-                 <item alignment="Qt::AlignHCenter">
+                 <item alignment="Qt::AlignLeft">
                   <widget class="QFrame" name="container_butttons">
                    <property name="minimumSize">
                     <size>
@@ -336,7 +339,7 @@
                     <property name="bottomMargin">
                      <number>0</number>
                     </property>
-                    <item>
+                    <item alignment="Qt::AlignLeft">
                      <widget class="QPushButton" name="refrech_button">
                       <property name="minimumSize">
                        <size>
@@ -362,20 +365,6 @@
                         <width>40</width>
                         <height>40</height>
                        </size>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="pushButton_23">
-                      <property name="text">
-                       <string>PushButton</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="pushButton_25">
-                      <property name="text">
-                       <string>PushButton</string>
                       </property>
                      </widget>
                     </item>
@@ -1689,7 +1678,7 @@
                <number>0</number>
               </property>
               <item>
-               <widget class="QFrame" name="container_percent_correct">
+               <widget class="QFrame" name="container_wpm">
                 <property name="minimumSize">
                  <size>
                   <width>260</width>
@@ -1708,7 +1697,7 @@
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_17">
+                <layout class="QVBoxLayout" name="verticalLayout_14">
                  <property name="spacing">
                   <number>0</number>
                  </property>
@@ -1725,14 +1714,14 @@
                   <number>0</number>
                  </property>
                  <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-                  <widget class="QFrame" name="frame_7">
+                  <widget class="QFrame" name="frame_9">
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_18">
+                   <layout class="QVBoxLayout" name="verticalLayout_22">
                     <property name="spacing">
                      <number>0</number>
                     </property>
@@ -1749,9 +1738,19 @@
                      <number>0</number>
                     </property>
                     <item>
-                     <widget class="QLabel" name="value_percent_correct">
+                     <widget class="QLabel" name="value_wpm">
                       <property name="text">
-                       <string>40%</string>
+                       <string>0</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="text_wpm">
+                      <property name="text">
+                       <string>WPM</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>
@@ -1851,7 +1850,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QFrame" name="container_wpm">
+               <widget class="QFrame" name="container_percent_correct">
                 <property name="minimumSize">
                  <size>
                   <width>260</width>
@@ -1870,7 +1869,7 @@
                 <property name="frameShadow">
                  <enum>QFrame::Raised</enum>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_14">
+                <layout class="QVBoxLayout" name="verticalLayout_17">
                  <property name="spacing">
                   <number>0</number>
                  </property>
@@ -1887,14 +1886,14 @@
                   <number>0</number>
                  </property>
                  <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-                  <widget class="QFrame" name="frame_9">
+                  <widget class="QFrame" name="frame_7">
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_22">
+                   <layout class="QVBoxLayout" name="verticalLayout_18">
                     <property name="spacing">
                      <number>0</number>
                     </property>
@@ -1911,19 +1910,9 @@
                      <number>0</number>
                     </property>
                     <item>
-                     <widget class="QLabel" name="value_wpm">
+                     <widget class="QLabel" name="value_percent_correct">
                       <property name="text">
-                       <string>0</string>
-                      </property>
-                      <property name="alignment">
-                       <set>Qt::AlignCenter</set>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="text_wpm">
-                      <property name="text">
-                       <string>WPM</string>
+                       <string>40%</string>
                       </property>
                       <property name="alignment">
                        <set>Qt::AlignCenter</set>

@@ -1,6 +1,5 @@
 import random
 import sys
-import threading
 
 import PyQt5.QtWidgets as qtw
 
@@ -26,7 +25,7 @@ class LineEdit(qtw.QLineEdit):
         self.timer.timeout.connect(self.isActive)
 
         self.count_second = 0
-        self.interval_time = 5
+        self.interval_time = 60
         self.write = True
 
     code_key = [192, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 189, 187, 220, 221, 219, 80, 79, 73, 85, 89, 84, 82, 69,
@@ -40,7 +39,8 @@ class LineEdit(qtw.QLineEdit):
             self.count_second = 0
             print('таймер остановился')
 
-            show_result(OLL_COUNT_LETTER, RIGHT_COUNT_LETTER, RIGHT_COUNT_LETTER / OLL_COUNT_LETTER)  # функция для окрываний ряздела статистики по тесту
+            show_result(COUNT_WORDS, RIGHT_COUNT_LETTER, RIGHT_COUNT_LETTER / OLL_COUNT_LETTER)
+            # функция для окрываний ряздела статистики по тесту
 
     def keyPressEvent(self, e):
         self.setStyleSheet("""border: 1px solid rgba(0, 0, 0, 0);""")
@@ -70,8 +70,9 @@ class LineEdit(qtw.QLineEdit):
 LINEEDIT: LineEdit
 
 
-def show_result(oll, right, percent):  # отображаем результаты в другом разделе
-    print(oll, right, round(percent, 2) * 100)  # статистика
+def show_result(words, right, percent):  # отображаем результаты в другом разделе
+    print(words, right, round(percent, 2) * 100)  # статистика
+    ex1.show_result(words, right, percent)
 
 
 def wrong_letter(line):  # изменяем цвет обводки, для отображения ошибки
@@ -86,8 +87,6 @@ def generate_string():
         while len(s) <= 55:
             s += random.choice(f) + ' '
         s = s[:s.rfind(' ')]
-        OLL_COUNT_LETTER = 0
-        RIGHT_COUNT_LETTER = 0
     STRING = s
 
 
@@ -125,7 +124,9 @@ class WindowMain(qtw.QMainWindow):
         self.initUi()
 
     def initUi(self):
-        self.ui.refrech_button.clicked.connect(self.generate_text_for_test)
+        self.ui.refrech_button.clicked.connect(self.generate_text_for_test_result)
+        self.ui.next_test_button.clicked.connect(self.generate_text_for_test_result)
+        self.ui.refrech_button_2.setEnabled(False)
 
         self.ui.test_lessons_div_1__text_button.clicked.connect(self.test_lessons_div_1__text_button_toggled)
         self.ui.test_lessons_div_1__text_button.enterEvent = lambda x: enter_button(
@@ -266,41 +267,56 @@ class WindowMain(qtw.QMainWindow):
 
     def color_setting_div_1__settings_button_toggled(self):
 
-        self.ui.stackedWidget.setCurrentIndex(3)
+        self.ui.stackedWidget.setCurrentIndex(2)
         self.focus = self.ui.color_setting_div_1__settings_button
 
     def color_setting_div_2__setting_button_toggled(self):
 
-        self.ui.stackedWidget.setCurrentIndex(3)
+        self.ui.stackedWidget.setCurrentIndex(2)
         self.focus = self.ui.color_setting_div_2__setting_button
 
     def about_profile_div_1__about_button_toggled(self):
 
-        self.ui.stackedWidget.setCurrentIndex(4)
+        self.ui.stackedWidget.setCurrentIndex(3)
         self.focus = self.ui.about_profile_div_1__about_button
 
     def about_profile_div_2__about_button_toggled(self):
 
-        self.ui.stackedWidget.setCurrentIndex(4)
+        self.ui.stackedWidget.setCurrentIndex(3)
         self.focus = self.ui.about_profile_div_2__about_button
 
     def about_profile_div_1__profile_button_toggled(self):
 
-        self.ui.stackedWidget.setCurrentIndex(5)
+        self.ui.stackedWidget.setCurrentIndex(4)
         self.focus = self.ui.about_profile_div_1__profile_button
 
     def about_profile_div_2__profile_button_toggled(self):
 
-        self.ui.stackedWidget.setCurrentIndex(5)
+        self.ui.stackedWidget.setCurrentIndex(4)
         self.focus = self.ui.about_profile_div_2__profile_button
 
     def generate_text_for_test(self):
+        global OLL_COUNT_LETTER, RIGHT_COUNT_LETTER
         global STRING
         generate_string()
         self.ui.given_text.setText(STRING)
         self.input_text.setText('')
         self.input_text.setFocus()
         LINEEDIT.write = True
+
+    def generate_text_for_test_result(self):
+        global OLL_COUNT_LETTER, RIGHT_COUNT_LETTER
+        self.generate_text_for_test()
+        self.ui.stackedWidget.setCurrentIndex(0)
+        OLL_COUNT_LETTER = 0
+        RIGHT_COUNT_LETTER = 0
+        LINEEDIT.write = True
+
+    def show_result(self, words, right, percent):
+        self.ui.stackedWidget.setCurrentIndex(5)
+        self.ui.value_wpm.setText(f'{words}')
+        self.ui.lalue_cpm.setText(f'{right}')
+        self.ui.value_percent_correct.setText(f'{int(percent * 100)}%')
 
 
 if __name__ == '__main__':

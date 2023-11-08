@@ -97,3 +97,34 @@
 #given_text{
     font-size: 40px;
 }
+
+#refrech_button{
+    background-color: background1000;
+    border: none;
+    outline: none;
+}
+/* style for result test */
+
+#container_cpm, #container_percent_correct, #container_wpm{
+    border-radius: 5px;
+    background-color:background500;
+    color: background-dominant1;
+
+}
+
+#next_test_button, #refrech_button_2{
+    background-color: background1000;
+    border: none;
+    outline: none;
+}
+
+#text_cpm, #text_wpm, #value_percent_correct{
+    color: background-dominant2;
+    font-size: 28px;
+}
+
+#value_wpm, #lalue_cpm{
+    font-weight: 500;
+    font-size: 50px;
+    color: background-dominant2;
+}

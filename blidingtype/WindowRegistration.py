@@ -10,7 +10,6 @@ from blidingtype import WindowLogin
 class WindowRegistration(qtw.QMainWindow):
     def __init__(self):
         super().__init__()
-
         self.login = None
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -20,9 +19,9 @@ class WindowRegistration(qtw.QMainWindow):
 
     def go_to_login(self):
         self.close()
-        color = 'orange'
-        style_file2 = colors.rewrite_qss('styles/login_style.qss', color)
-        app.setStyleSheet(style_file2)
+        # color = 'orange'
+        # style_file2 = colors.rewrite_qss('styles/login_style.qss', color)
+        # app.setStyleSheet(style_file2)
         self.login = WindowLogin.WindowLogin()
         self.login.showMaximized()
 
@@ -86,6 +85,7 @@ class WindowRegistration(qtw.QMainWindow):
         if self.ui.error_label.text() == '':
             self.hide_error()
             registration.entry_to_db(login, email, password)  # записываем данные в бд
+            self.go_to_login()
 
 
 if __name__ == '__main__':

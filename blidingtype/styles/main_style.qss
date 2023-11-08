@@ -71,3 +71,29 @@
     padding: 0 20px 10px 20px;
 }
 
+
+/* test style */
+
+#keyboard QPushButton{
+    background-color: background1000;
+    border: 1px solid background-dominant2;
+    border-radius: 5px;
+    font-size: 26px;
+    color: background-dominant2;
+}
+
+#test, #main_widget{
+    background-color: background1000;
+}
+
+#input_text{
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 40px;
+    outline: none;
+    border: none;
+    color: background-dominant2;
+
+}
+#given_text{
+    font-size: 40px;
+}

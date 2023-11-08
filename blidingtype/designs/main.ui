@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1900</width>
-    <height>1199</height>
+    <width>1840</width>
+    <height>910</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -172,7 +172,7 @@
        <item>
         <widget class="QStackedWidget" name="stackedWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>5</number>
          </property>
          <widget class="QWidget" name="test">
           <layout class="QVBoxLayout" name="verticalLayout">
@@ -252,8 +252,8 @@
                   <widget class="QFrame" name="container_typed_text">
                    <property name="minimumSize">
                     <size>
-                     <width>1000</width>
-                     <height>180</height>
+                     <width>1300</width>
+                     <height>360</height>
                     </size>
                    </property>
                    <property name="frameShape">
@@ -262,44 +262,42 @@
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
-                   <widget class="QTextBrowser" name="input_text">
-                    <property name="geometry">
-                     <rect>
-                      <x>0</x>
-                      <y>0</y>
-                      <width>1500</width>
-                      <height>270</height>
-                     </rect>
+                   <layout class="QVBoxLayout" name="verticalLayout_13">
+                    <property name="spacing">
+                     <number>0</number>
                     </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>1000</width>
-                      <height>180</height>
-                     </size>
+                    <property name="leftMargin">
+                     <number>0</number>
                     </property>
-                   </widget>
-                   <widget class="QLabel" name="given_text">
-                    <property name="geometry">
-                     <rect>
-                      <x>0</x>
-                      <y>0</y>
-                      <width>1500</width>
-                      <height>270</height>
-                     </rect>
+                    <property name="topMargin">
+                     <number>0</number>
                     </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>1000</width>
-                      <height>180</height>
-                     </size>
+                    <property name="rightMargin">
+                     <number>0</number>
                     </property>
-                    <property name="text">
-                     <string>TextLabel</string>
+                    <property name="bottomMargin">
+                     <number>0</number>
                     </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                    </property>
-                   </widget>
+                    <item>
+                     <widget class="QLabel" name="given_text">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>180</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>1300</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
                  <item alignment="Qt::AlignHCenter">
@@ -339,9 +337,31 @@
                      <number>0</number>
                     </property>
                     <item>
-                     <widget class="QPushButton" name="pushButton_29">
+                     <widget class="QPushButton" name="refrech_button">
+                      <property name="minimumSize">
+                       <size>
+                        <width>50</width>
+                        <height>50</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>50</width>
+                        <height>50</height>
+                       </size>
+                      </property>
                       <property name="text">
-                       <string>PushButton</string>
+                       <string/>
+                      </property>
+                      <property name="icon">
+                       <iconset>
+                        <normaloff>../images/svg_icon/refresh.svg</normaloff>../images/svg_icon/refresh.svg</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>40</width>
+                        <height>40</height>
+                       </size>
                       </property>
                      </widget>
                     </item>
@@ -379,13 +399,13 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>350</height>
+               <height>360</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>350</height>
+               <height>360</height>
               </size>
              </property>
              <property name="frameShape">
@@ -411,7 +431,7 @@
                <number>0</number>
               </property>
               <property name="bottomMargin">
-               <number>0</number>
+               <number>10</number>
               </property>
               <item alignment="Qt::AlignHCenter|Qt::AlignBottom">
                <widget class="QFrame" name="container_keybooard">
@@ -490,6 +510,9 @@
                     </property>
                     <item>
                      <widget class="QPushButton" name="btn_q">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -514,6 +537,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_w">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -538,6 +564,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_e">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -562,6 +591,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_r">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -586,6 +618,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_t">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -610,6 +645,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_y">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -634,6 +672,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_u">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -658,6 +699,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_i">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -682,6 +726,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_o">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -706,6 +753,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_p">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -730,6 +780,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_bracket_l">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -754,6 +807,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_bracket_r">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -817,6 +873,9 @@
                     </property>
                     <item>
                      <widget class="QPushButton" name="btn_a">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -841,6 +900,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_s">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -865,6 +927,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_d">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -889,6 +954,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_f">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -913,6 +981,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_g">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -937,6 +1008,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_h">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -961,6 +1035,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_j">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -985,6 +1062,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_k">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1009,6 +1089,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_l">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1033,6 +1116,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_semicolon">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1057,6 +1143,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_apostrophe">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1120,6 +1209,9 @@
                     </property>
                     <item>
                      <widget class="QPushButton" name="btn_z">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1144,6 +1236,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_x">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1168,6 +1263,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_c">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1192,6 +1290,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_v">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1216,6 +1317,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_b">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1240,6 +1344,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_n">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1264,6 +1371,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_m">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1288,6 +1398,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_comma">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1312,6 +1425,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_dot">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1336,6 +1452,9 @@
                     </item>
                     <item>
                      <widget class="QPushButton" name="btn_slash">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>80</width>
@@ -1399,6 +1518,9 @@
                     </property>
                     <item alignment="Qt::AlignHCenter">
                      <widget class="QPushButton" name="btn_spase">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
                       <property name="minimumSize">
                        <size>
                         <width>500</width>
@@ -1521,6 +1643,385 @@
              <property name="text">
               <string>Profile</string>
              </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="result_test">
+          <layout class="QVBoxLayout" name="verticalLayout_19">
+           <property name="spacing">
+            <number>20</number>
+           </property>
+           <property name="leftMargin">
+            <number>20</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QFrame" name="container_result">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_20">
+              <property name="spacing">
+               <number>10</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QFrame" name="container_percent_correct">
+                <property name="minimumSize">
+                 <size>
+                  <width>260</width>
+                  <height>260</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>260</width>
+                  <height>260</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_17">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                  <widget class="QFrame" name="frame_7">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_18">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="value_percent_correct">
+                      <property name="text">
+                       <string>40%</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="container_cpm">
+                <property name="minimumSize">
+                 <size>
+                  <width>260</width>
+                  <height>260</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>260</width>
+                  <height>260</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_15">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                  <widget class="QFrame" name="frame_5">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_16">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="lalue_cpm">
+                      <property name="text">
+                       <string>34</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="text_cpm">
+                      <property name="text">
+                       <string>CPM</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="container_wpm">
+                <property name="minimumSize">
+                 <size>
+                  <width>260</width>
+                  <height>260</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>260</width>
+                  <height>260</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_14">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                  <widget class="QFrame" name="frame_9">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_22">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="value_wpm">
+                      <property name="text">
+                       <string>0</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="text_wpm">
+                      <property name="text">
+                       <string>WPM</string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignLeft|Qt::AlignTop">
+            <widget class="QFrame" name="frame">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
+              <property name="spacing">
+               <number>10</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="refrech_button_2">
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>50</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>../images/svg_icon/refresh.svg</normaloff>../images/svg_icon/refresh.svg</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>40</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="next_test_button">
+                <property name="minimumSize">
+                 <size>
+                  <width>50</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>50</width>
+                  <height>50</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="icon">
+                 <iconset>
+                  <normaloff>../images/svg_icon/next_test.svg</normaloff>../images/svg_icon/next_test.svg</iconset>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>40</width>
+                  <height>60</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>

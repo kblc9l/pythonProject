@@ -4,7 +4,7 @@ from checks import check_password, check_email, check_login
 from work_with_db import registration
 from blidingtype.windowregister_ui import Ui_MainWindow
 import colors
-from blidingtype import WindowLogin
+from blidingtype import WindowLogin_2
 
 
 class WindowRegistration(qtw.QMainWindow):
@@ -13,17 +13,13 @@ class WindowRegistration(qtw.QMainWindow):
         self.login = None
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
         self.ui.register_button.clicked.connect(self.data_validity_check)
         self.hide_error()
         self.ui.login_button.clicked.connect(self.go_to_login)
 
     def go_to_login(self):
-        self.close()
-        # color = 'orange'
-        # style_file2 = colors.rewrite_qss('styles/login_style.qss', color)
-        # app.setStyleSheet(style_file2)
-        self.login = WindowLogin.WindowLogin()
-        self.login.showMaximized()
+        pass
 
     def hide_error(self):  # скрыть блок ошибки
         self.ui.error_label.hide()

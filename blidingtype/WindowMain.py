@@ -6,91 +6,8 @@ import PyQt5.QtWidgets as qtw
 from PyQt5 import QtGui
 from PyQt5.QtCore import QSize, QTimer
 
+from blidingtype import colors
 from blidingtype.window_main_ui_2 import Ui_MainWindow
-import colors
-
-STRING = ''
-MODE = 'time'
-OLL_COUNT_LETTER = 0
-RIGHT_COUNT_LETTER = 0
-COUNT_WORDS = 0
-
-
-class LineEdit(qtw.QLineEdit):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        self.timer = QTimer(self)
-        self.timer.setInterval(1000)
-        self.timer.timeout.connect(self.isActive)
-
-        self.count_second = 0
-        self.interval_time = 60
-        self.write = True
-
-    code_key = [192, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 189, 187, 220, 221, 219, 80, 79, 73, 85, 89, 84, 82, 69,
-                87, 81, 65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 222, 191, 190, 188, 77, 78, 66, 86, 67, 88, 90, 32]
-
-    def isActive(self):
-        self.count_second += 1
-        if self.count_second == self.interval_time:  # кол-во секунд
-            self.timer.stop()
-            self.write = False
-            self.count_second = 0
-            print('таймер остановился')
-
-            show_result(COUNT_WORDS, RIGHT_COUNT_LETTER, RIGHT_COUNT_LETTER / OLL_COUNT_LETTER)
-            # функция для окрываний ряздела статистики по тесту
-
-    def keyPressEvent(self, e):
-        self.setStyleSheet("""border: 1px solid rgba(0, 0, 0, 0);""")
-
-        global STRING, OLL_COUNT_LETTER, RIGHT_COUNT_LETTER, COUNT_WORDS
-
-        t, k = e.text(), e.nativeVirtualKey()
-
-        if k in self.code_key and self.write:
-            if OLL_COUNT_LETTER == 0:
-                self.timer.start()
-                print('таймер запустился')
-            if STRING:
-                OLL_COUNT_LETTER += 1  # увеличение общего кол-ва символов
-                if t == STRING[0]:
-                    if t == ' ':
-                        COUNT_WORDS += 1  # увеличиваем количество слов
-                    super().keyPressEvent(e)
-                    STRING = STRING[1:]
-                    RIGHT_COUNT_LETTER += 1  # увеличение кол-ва правильных символов
-                else:
-                    wrong_letter(LINEEDIT)  # выводим ошибку
-            else:
-                WindowMain.generate_text_for_test(ex1)  # генерируем новую строку, когда ввели всю строку
-
-
-LINEEDIT: LineEdit
-
-
-def show_result(words, right, percent):  # отображаем результаты в другом разделе
-    print(words, right, round(percent, 2) * 100)  # статистика
-    ex1.show_result(words, right, percent)
-
-
-def wrong_letter(line):  # изменяем цвет обводки, для отображения ошибки
-    line.setStyleSheet("""border: 1px solid #c71700;""")
-
-
-def generate_string():
-    global STRING, OLL_COUNT_LETTER, RIGHT_COUNT_LETTER
-    with open('data/easy_words.txt', 'r', encoding='utf8') as f:
-        f = f.read().split()
-        s = ''
-        while len(s) <= 55:
-            s += random.choice(f) + ' '
-        s = s[:s.rfind(' ')]
-    STRING = s
-
-
-generate_string()
 
 
 def enter_button(button):
@@ -98,10 +15,73 @@ def enter_button(button):
 
 
 class WindowMain(qtw.QMainWindow):
-    global STRING
+    class LineEdit(qtw.QLineEdit):
+        STRING = ''
+        MODE = 'time'
+        OLL_COUNT_LETTER = 0
+        RIGHT_COUNT_LETTER = 0
+        COUNT_WORDS = 0
+        count_second = 0
+        interval_time = 10
+        write = True
+
+        code_key = [192, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 189, 187, 220, 221, 219, 80, 79, 73, 85, 89, 84, 82,
+                    69,
+                    87, 81, 65, 83, 68, 70, 71, 72, 74, 75, 76, 186, 222, 191, 190, 188, 77, 78, 66, 86, 67, 88, 90, 32]
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+
+            self.timer = QTimer(self)
+            self.timer.setInterval(1000)
+            self.timer.timeout.connect(self.isActive)
+
+        def isActive(self):
+            self.count_second += 1
+            if self.count_second == self.interval_time:
+                self.timer.stop()
+                self.write = False
+                self.count_second = 0
+                print('таймер остановился')
+                WindowMain.show_result(ex1, self.COUNT_WORDS, self.RIGHT_COUNT_LETTER,
+                                       self.RIGHT_COUNT_LETTER / self.OLL_COUNT_LETTER)
+
+        def keyPressEvent(self, e):
+            self.setStyleSheet("""border: 1px solid rgba(0, 0, 0, 0);""")
+            t, k = e.text(), e.nativeVirtualKey()
+
+            if k in self.code_key and self.write:
+                if self.OLL_COUNT_LETTER == 0:
+                    self.timer.start()
+                    print('таймер запустился')
+                if self.STRING:
+                    self.OLL_COUNT_LETTER += 1
+                    if t == self.STRING[0]:
+                        if t == ' ':
+                            self.COUNT_WORDS += 1
+                        super().keyPressEvent(e)
+                        self.STRING = self.STRING[1:]
+                        self.RIGHT_COUNT_LETTER += 1
+                    else:
+                        WindowMain.wrong_letter(ex1)
+                else:
+                    WindowMain.generate_text_for_test_result(ex1)
+
+        def generate_string(self):
+            with open('data/easy_words.txt', 'r', encoding='utf8') as f:
+                f = f.read().split()
+                s = ''
+                while len(s) <= 55:
+                    s += random.choice(f) + ' '
+                s = s[:s.rfind(' ')]
+            self.write = True
+            self.STRING = s
+            return s
+
+    LINEEDIT: LineEdit
 
     def __init__(self):
-        global LINEEDIT
+
         super().__init__()
 
         self.ui = Ui_MainWindow()
@@ -112,16 +92,29 @@ class WindowMain(qtw.QMainWindow):
         self.focus = self.ui.test_lessons_div_2__text_button
         self.ui.test_lessons_div_2__text_button.setFocus()
 
-        self.input_text = LineEdit(self.ui.container_typed_text)
-        self.input_text.setMinimumSize(QSize(0, 180))
-        self.input_text.setObjectName("input_text")
-        self.ui.verticalLayout_13.addWidget(self.input_text)
-        self.input_text.setFocus()
+        self.LINEEDIT = self.LineEdit(self.ui.container_typed_text)
+        self.LINEEDIT.setMinimumSize(QSize(0, 180))
+        self.LINEEDIT.setObjectName("input_text")
+        self.ui.verticalLayout_13.addWidget(self.LINEEDIT)
+        self.LINEEDIT.setFocus()
 
-        self.ui.given_text.setText(STRING)
-        LINEEDIT = self.input_text
+        self.ui.given_text.setText(self.LINEEDIT.generate_string())
 
         self.initUi()
+
+    def wrong_letter(self):
+        self.LINEEDIT.setStyleSheet("""border: 1px solid #c71700;""")
+
+    def generate_text_for_test_result(self):
+        s = self.LINEEDIT.generate_string()
+        self.ui.given_text.setText(s)
+        self.LINEEDIT.setText('')
+        self.LINEEDIT.setFocus()
+        self.ui.stackedWidget.setCurrentIndex(0)
+        self.LINEEDIT.OLL_COUNT_LETTER = 0
+        self.LINEEDIT.RIGHT_COUNT_LETTER = 0
+        self.LINEEDIT.COUNT_WORDS = 0
+        self.LINEEDIT.count_second = 0
 
     def initUi(self):
         self.ui.refrech_button.clicked.connect(self.generate_text_for_test_result)
@@ -295,23 +288,6 @@ class WindowMain(qtw.QMainWindow):
         self.ui.stackedWidget.setCurrentIndex(4)
         self.focus = self.ui.about_profile_div_2__profile_button
 
-    def generate_text_for_test(self):
-        global OLL_COUNT_LETTER, RIGHT_COUNT_LETTER
-        global STRING
-        generate_string()
-        self.ui.given_text.setText(STRING)
-        self.input_text.setText('')
-        self.input_text.setFocus()
-        LINEEDIT.write = True
-
-    def generate_text_for_test_result(self):
-        global OLL_COUNT_LETTER, RIGHT_COUNT_LETTER
-        self.generate_text_for_test()
-        self.ui.stackedWidget.setCurrentIndex(0)
-        OLL_COUNT_LETTER = 0
-        RIGHT_COUNT_LETTER = 0
-        LINEEDIT.write = True
-
     def show_result(self, words, right, percent):
         self.ui.stackedWidget.setCurrentIndex(5)
         self.ui.value_wpm.setText(f'{words}')
@@ -322,10 +298,11 @@ class WindowMain(qtw.QMainWindow):
 if __name__ == '__main__':
     app = qtw.QApplication(sys.argv)
     color = 'orange'
+
     style_file = colors.rewrite_qss('styles/main_style.qss', color)
     app.setStyleSheet(style_file)
-    app.setStyleSheet(style_file)
+
     ex1 = WindowMain()
-    ex1.show()
+    ex1.showMaximized()
 
     sys.exit(app.exec())

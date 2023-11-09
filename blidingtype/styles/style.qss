@@ -1,0 +1,152 @@
+@font-face {
+    font-family: "Noto_Sans_Regular";
+    src: url("fonts/NotoSans-Regular.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Noto_Sans_ExtraBold";
+    src: url("fonts/NotoSans-ExtraBold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 800;
+}
+
+*{
+    font-family: 'Noto_Sans_Regular';
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: background250;
+}
+
+#centralwidget, #main_container{
+    background-color: background1000;
+}
+
+/* ==========================================  Preview   ====================================================*/
+
+#preview_logo_texts{
+    padding: 0 0 0 20px;
+}
+
+#preview_logo_text_1, #preview_logo_text_2{
+    font-size: 72px;
+    font-family: Noto_Sans_ExtraBold;
+    font-weight: 800;
+}
+
+#preview_logo_text_1{
+    color: background-dominant2;
+}
+
+#preview_logo_text_2{
+    color: background-dominant1;
+}
+
+#preview_label1{
+    font-size: 48px;
+}
+#preview_label2{
+    font-size: 32px;
+    color: background400;
+}
+
+#preview_login_button, #preview_registration_button{
+    font-size: 32px;
+    padding: 14px 28px 14px 28px;
+    border-radius: 5px;
+}
+
+#preview_login_button{
+    background-color: background-dominant1;
+    color: background1000;
+}
+
+#preview_login_button:hover{
+    color: background1000;
+	background-color: background-dominant2;
+}
+
+#preview_registration_button{
+    background-color: background-dominant2;
+    color: background1000;
+}
+
+#preview_registration_button:hover{
+    background-color: background-dominant1;
+    color: background1000;
+}
+
+/* ==========================================  Login and Registration  =========================================*/
+
+#login_title, #registration_title{
+    font-size: 72px;
+    color: background-dominant1;
+}
+
+#login_label_1, #registration_label_1{
+    font-size: 48px;
+}
+
+
+#login_login_edit, #login_password_edit, #registration_login_edit, #registration_password_edit, #registration_email_edit{
+	font-size: 27px;
+	color: #808080;
+	padding: 14px 28px;
+	border: 0px;
+	border-bottom: 1px solid #808080;
+	background-color: background1000;
+}
+
+#login_login_edit::focus, #login_password_edit::focus, #registration_login_edit::focus, #registration_password_edit::focus, #registration_email_edit::focus{
+	border: 1px solid #808080;
+	border-radius: 5px;
+}
+
+
+#login_login_button, #registration_register_button{
+	border-radius: 5px;
+	color: background-dominant2;
+	background-color: background500;
+	font-size: 27px;
+	padding: 14px 24px;
+
+}
+#login_login_button::hover, #registration_register_button::hover{
+	background-color: background-dominant1;
+	color: background500;
+}
+
+
+
+#login_registration_button, #registration_login_button{
+    background-color: background1000;
+    color: background-dominant1;
+    font-family: NotoSans-Italic;
+    font-style: italic;
+}
+
+#login_registration_button:hover, #registration_login_button:hover{
+    color: background-dominant2;
+}
+
+#login_error_label, #registration_error_label{
+    color: background-dominant2;
+    font-size: 20px;
+}
+
+#login_error_container, #registration_error_container{
+    background-color: warning;
+    border-radius: 5px;
+    padding: 14px 14px;
+}
+
+#login_error, #registration_error{
+    background-color: warning;
+    border: none;
+}
+
+
+/* ==========================================  Main   ====================================================*/'
+

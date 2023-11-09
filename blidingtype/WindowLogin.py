@@ -14,19 +14,12 @@ class WindowLogin(qtw.QMainWindow):
         self.register = None
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.form_layout = qtw.QFormLayout()
         self.ui.login_button.clicked.connect(self.data_validity_check)
         self.hide_error()
         self.ui.registration_edit.clicked.connect(self.go_to_registration)
 
     def go_to_registration(self):  # переход к окну регистрации
-        global app
-        color = 'orange'
-        # style_file2 = colors.rewrite_qss('styles/registration_style.qss', color)
-        # app.setStyleSheet(style_file2)
-        self.register = WindowRegistration.WindowRegistration()
-        self.register.showMaximized()
-        self.hide()
+        pass
 
     def hide_error(self):  # скрыть блок ошибки
         self.ui.error_label.hide()

@@ -1299,8 +1299,10 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.main_container.setCurrentIndex(2)
+        self.main_container.setCurrentIndex(3)
         self.stackedWidget.setCurrentIndex(0)
+        self.burger.toggled['bool'].connect(self.icon_menu_widget.setVisible) # type: ignore
+        self.burger.toggled['bool'].connect(self.full_menu_widget.setHidden) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

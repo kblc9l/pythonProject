@@ -148,5 +148,107 @@
 }
 
 
-/* ==========================================  Main   ====================================================*/'
+/* ==========================================  Main   ====================================================*/
 
+
+
+#logo_title{
+    color: #ffa31a;
+}
+
+#full_menu_widget QPushButton{
+    background: none;
+    outline: none;
+    border: none;
+    font-size: 32px;
+    padding: 12px 0 12px 30px;
+}
+
+#full_menu_widget QPushButton:hover{
+    color: background-dominant2;
+}
+
+#full_menu_widget QPushButton:focus{
+    color: background-dominant2;
+}
+
+#icon_menu_widget QPushButton{
+    background: none;
+    outline: none;
+    border: none;
+    padding: 12px 0 12px 0;
+}
+
+#header_widget QPushButton{
+    background: none;
+    outline: none;
+    border: none;
+}
+
+#logo_title{
+    font-size: 32px;
+    padding: 0 30px 0 0;
+}
+
+#title_window{
+    font-size: 40px;
+    padding: 0 20px 10px 20px;
+}
+
+
+/* test style */
+
+#keyboard QPushButton{
+    background-color: background1000;
+    border: 1px solid background-dominant2;
+    border-radius: 5px;
+    font-size: 26px;
+    color: background-dominant2;
+}
+
+#test, #main_widget{
+    background-color: background1000;
+}
+
+#input_text{
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 40px;
+    outline: none;
+    border: none;
+    color: background-dominant2;
+
+}
+#given_text{
+    font-size: 40px;
+}
+
+#refrech_button{
+    background-color: background1000;
+    border: none;
+    outline: none;
+}
+/* style for result test */
+
+#container_cpm, #container_percent_correct, #container_wpm{
+    border-radius: 5px;
+    background-color:background500;
+    color: background-dominant1;
+
+}
+
+#next_test_button, #refrech_button_2{
+    background-color: background1000;
+    border: none;
+    outline: none;
+}
+
+#text_cpm, #text_wpm, #value_percent_correct{
+    color: background-dominant2;
+    font-size: 28px;
+}
+
+#value_wpm, #lalue_cpm{
+    font-weight: 500;
+    font-size: 50px;
+    color: background-dominant2;
+}

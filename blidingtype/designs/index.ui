@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="main_container">
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="preview">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -3725,5 +3725,38 @@ Typing Skills</string>
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>burger</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>icon_menu_widget</receiver>
+   <slot>setVisible(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>426</x>
+     <y>70</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>31</x>
+     <y>177</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>burger</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>full_menu_widget</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>406</x>
+     <y>56</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>212</x>
+     <y>139</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

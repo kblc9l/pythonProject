@@ -23,3 +23,14 @@ def rewrite_qss(name_file, color):
         style_file = style_file.replace('warning', COLOR[color]['warning'])
         style_file = style_file.replace('background400', COLOR[color]['background400'])
         return style_file
+
+
+def rewrite_qss_for_widget(style_file, color):
+    style_file = style_file.replace('background1000', COLOR[color]['background1000'])
+    style_file = style_file.replace('background500', COLOR[color]['background500'])
+    style_file = style_file.replace('background250', COLOR[color]['background250'])
+    style_file = style_file.replace('background-dominant1', COLOR[color]['background-dominant1'])
+    style_file = style_file.replace('background-dominant2', COLOR[color]['background-dominant2'])
+    style_file = style_file.replace('warning', COLOR[color]['warning'])
+    style_file = style_file.replace('background400', COLOR[color]['background400'])
+    return style_file

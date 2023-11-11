@@ -106,11 +106,12 @@
 
 
 #login_login_button, #registration_register_button{
-	border-radius: 5px;
+
 	color: background-dominant2;
 	background-color: background500;
 	font-size: 27px;
 	padding: 14px 24px;
+	border-radius: 5px;
 
 }
 #login_login_button::hover, #registration_register_button::hover{
@@ -200,24 +201,27 @@
 
 #keyboard QPushButton{
     background-color: background1000;
+    color: background-dominant2;
     border: 1px solid background-dominant2;
     border-radius: 5px;
     font-size: 26px;
-    color: background-dominant2;
+
 }
 
 #test, #main_widget{
     background-color: background1000;
 }
 
-#input_text{
+#input_text, LineEdit{
     background-color: rgba(0, 0, 0, 0);
     font-size: 40px;
     outline: none;
-    border: none;
+    border: 0px;
+	border-bottom: 1px solid #808080;
     color: background-dominant2;
-
 }
+
+
 #given_text{
     font-size: 40px;
 }
@@ -247,8 +251,49 @@
     font-size: 28px;
 }
 
-#value_wpm, #lalue_cpm{
+#value_wpm, #value_cpm{
     font-weight: 500;
     font-size: 50px;
     color: background-dominant2;
+}
+
+/* ==========================================  Profile   ====================================================*/
+
+#profile_best_cpm, #profile_best_persent, #profile_best_wpm, #profile_avg_cpm, #profile_avg_persent, #profile_avg_wpm{
+    border-radius: 5px;
+    background-color:background500;
+    color: background-dominant1;
+}
+
+#profile_value_wpm, #profile_value_percent, #profile_value_cpm, #profile_avg_value_wpm, #profile_avg_value_percent, #profile_avg_value_cpm{
+    font-weight: 500;
+    font-size: 50px;
+    color: background-dominant2;
+}
+
+#profile_avg_text_cpm, #profile_avg_text_percent, #profile_avg_text_wpm, #profile_text_cpm, #profile_text_percent, #profile_text_wpm{
+    color: background-dominant2;
+    font-size: 28px;
+}
+
+
+#profile_avg_result_label, #profile_best_result_label, #profile_choise_language_label{
+    font-size: 32px;
+}
+
+#choise_russian_language, #choise_english_language{
+
+	font-size: 27px;
+	padding: 14px 24px;
+	border-radius: 5px;
+}
+
+#choise_russian_language{
+    background-color: background-dominant1;
+    color: background500;
+}
+
+#choise_english_language{
+    color: background-dominant2;
+	background-color: background500;
 }

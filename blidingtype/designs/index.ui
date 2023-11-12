@@ -4626,7 +4626,7 @@ Typing Skills</string>
               </size>
              </property>
              <property name="text">
-              <string>adadadsad</string>
+              <string/>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>

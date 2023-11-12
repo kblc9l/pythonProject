@@ -11,7 +11,7 @@ class LoginInDb(Exception):
 
 def entry_to_db(login: str, email: str, password):  # запись данных пользователя в базу данных
     try:
-        con = sqlite3.connect('database.sqlite')
+        con = sqlite3.connect('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/database.sqlite')
         cur = con.cursor()
         request = ("INSERT INTO people (login, email, password) "
                    "VALUES") + f" (\'{login}\', \'{email}\', \'{password}\')"
@@ -24,7 +24,7 @@ def entry_to_db(login: str, email: str, password):  # запись данных 
 
 
 def check_email_in_db(email):  # функция проверки повтора email в базе данных
-    con = sqlite3.connect('database.sqlite')
+    con = sqlite3.connect('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/database.sqlite')
     cur = con.cursor()
     request = f"""SELECT * FROM people WHERE email = '{email}' """
     print(request)
@@ -36,7 +36,7 @@ def check_email_in_db(email):  # функция проверки повтора 
 
 
 def check_login_in_db(login):  # проверка наличие логина в базе данных
-    con = sqlite3.connect('database.sqlite')
+    con = sqlite3.connect('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/database.sqlite')
     cur = con.cursor()
     result = cur.execute(f"""SELECT * FROM people WHERE login = '{login}'""").fetchall()
     con.close()

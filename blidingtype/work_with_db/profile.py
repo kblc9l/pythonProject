@@ -3,7 +3,7 @@ import sqlite3
 
 def get_oll_result(id_person):
     try:
-        con = sqlite3.connect('database.sqlite')
+        con = sqlite3.connect('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/database.sqlite')
         cur = con.cursor()
         result = cur.execute(f"""SELECT wpm, cpm, accuracy FROM result WHERE people = '{id_person}'""").fetchall()
         con.close()
@@ -21,10 +21,10 @@ def get_oll_result(id_person):
 
 
 def get_id_user():
-    with open('data/login_data.txt', 'r', encoding='utf8') as f:
+    with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/login_data.txt', 'r', encoding='utf8') as f:
         login, password = [i.rstrip() for i in f.readlines()]
     try:
-        con = sqlite3.connect('database.sqlite')
+        con = sqlite3.connect('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/database.sqlite')
         cur = con.cursor()
         result = cur.execute(
             f"""SELECT id FROM people WHERE login = '{login}' and password = '{password}'""").fetchall()

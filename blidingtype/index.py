@@ -11,11 +11,27 @@ from work_with_db import login as lg
 from checks import check_password, check_email, check_login
 from work_with_db import registration, test_result, profile
 
-flag = True
+flag = None
 
 
-def enter_button(button):
-    button.setFocus()
+def check_login_people():
+    global flag
+    try:
+        with open('data/login_data.txt', 'r', encoding='utf8') as data_person:
+            data = data_person.readlines()
+            if len(data) == 2:
+                login, password = [i.rstrip() for i in data]
+                flag = True
+                lg.check_cor_password_in_db(login, password)
+            elif len(data) == 0 or len(data) == 1:
+                flag = False
+                print('пользователь не зарегистрировался')
+    except lg.IncorrectPassword:
+        flag = False
+        print('пароль не совпадает')
+    except FileNotFoundError as er:
+        flag = False
+        print(er, 'файл не найден')
 
 
 class LineEdit(qtw.QLineEdit):
@@ -27,7 +43,7 @@ class LineEdit(qtw.QLineEdit):
     count_second = 0
     interval_time = 10
     write = True
-    level = 'medium'
+    level = 'easy'
 
     code_key = [192, 49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 189, 187, 220, 221, 219, 80, 79, 73, 85, 89, 84, 82,
                 69,
@@ -52,7 +68,16 @@ class LineEdit(qtw.QLineEdit):
                                         self.RIGHT_COUNT_LETTER / self.OLL_COUNT_LETTER)
 
     def keyPressEvent(self, e):
-        self.setStyleSheet("""border: 1px solid rgba(0, 0, 0, 0);""")
+        style_active = """
+            background-color: rgba(0, 0, 0, 0);
+            font-size: 40px;
+            outline: none;    
+            color: background-dominant2;
+            border: 0px;
+            border-bottom: 1px solid #808080;"""
+
+        style_active = colors.rewrite_qss_for_widget(style_active, color)
+        self.setStyleSheet(style_active)
         t, k = e.text(), e.nativeVirtualKey()
 
         if k in self.code_key and self.write:
@@ -115,9 +140,28 @@ LIST_BUTTONS = {'active': None}
 
 
 def wrong_letter():
-    style_active = """border: 1px solid warning;"""
+    style_active = """border: 0px;
+    border-bottom: 1px solid warning;
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 40px;
+    outline: none;    
+    color: background-dominant2;"""
     style_active = colors.rewrite_qss_for_widget(style_active, color)
     LINEEDIT.setStyleSheet(style_active)
+
+
+def enter_button_2(button):
+    button.setIcon(QtGui.QIcon(f'images/{color}/{button.objectName()[:-2]}_active.svg'))
+
+
+def leave_button_2(button):
+    button.setIcon(QtGui.QIcon(f'images/{color}/{button.objectName()[:-2]}_inactive.svg'))
+
+
+def change_color(button):
+    with open('data/color.txt', 'w', encoding='utf8') as f:
+        f.write(str(button.objectName().replace('change_color_', '')))
+        f.close()
 
 
 class WindowIndex(qtw.QMainWindow):
@@ -125,15 +169,52 @@ class WindowIndex(qtw.QMainWindow):
         super().__init__()
         self.buttons = []
         self.input_text = None
-        self.focus = None
+
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        check_login_people()
         if not flag:
             self.go_to_preview()
         else:
-            self.go_to_main()
+            self.go_to_login()
+        self.initUI()
+        self.focus = self.ui.test_2
+        self.last_focus = self.ui.test_2
+        self.select_focus(self.ui.test_2)
 
     # function for switching window in main_container (QStacketWidget)
+
+    def initUI(self):
+        self.ui.login_error.setIcon(QtGui.QIcon(f'images/{color}/error_inactive.svg'))
+        self.ui.registration_error.setIcon(QtGui.QIcon(f'images/{color}/error_inactive.svg'))
+        self.ui.logo_icon_1.setIcon(QtGui.QIcon(f'images/{color}/logo.svg'))
+        self.ui.logo_icon_2.setIcon(QtGui.QIcon(f'images/{color}/logo.svg'))
+        self.ui.preview_logo.setIcon(QtGui.QIcon(f'images/{color}/logo_big.svg'))
+        self.ui.login_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
+        self.ui.registration_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
+
+        self.ui.test_1.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.test_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.lessons_1.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.lessons_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.colors_1.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.colors_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.settings_1.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.settings_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.about_1.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.about_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.profile_1.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.profile_1.objectName()[:-2]}_inactive.svg'))
+
+        self.ui.test_2.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.test_2.objectName()[:-2]}_inactive.svg'))
+        self.ui.lessons_2.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.lessons_2.objectName()[:-2]}_inactive.svg'))
+        self.ui.colors_2.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.colors_2.objectName()[:-2]}_inactive.svg'))
+        self.ui.settings_2.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.settings_2.objectName()[:-2]}_inactive.svg'))
+        self.ui.about_2.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.about_2.objectName()[:-2]}_inactive.svg'))
+        self.ui.profile_2.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.profile_2.objectName()[:-2]}_inactive.svg'))
+
+        self.ui.burger_1.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.burger_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.reset_language_1.setIcon(
+            QtGui.QIcon(f'images/{color}/{self.ui.reset_language_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.refrech_button.setIcon(
+            QtGui.QIcon(f'images/{color}/{self.ui.refrech_button.objectName()}_inactive.svg'))
+        self.ui.next_test_button.setIcon(
+            QtGui.QIcon(f'images/{color}/{self.ui.next_test_button.objectName()}_inactive.svg'))
 
     def go_to_preview(self):
         self.ui.main_container.setCurrentIndex(0)
@@ -145,6 +226,14 @@ class WindowIndex(qtw.QMainWindow):
         self.ui.login_login_button.clicked.connect(self.login_data_validity_check)
         self.login_hide_error()
         self.ui.login_registration_button.clicked.connect(self.go_to_registration)
+        self.ui.login_show_password.clicked.connect(lambda x: self.change_echo_mode(self.ui.login_show_password))
+        self.ui.registration_show_password.clicked.connect(
+            lambda x: self.change_echo_mode(self.ui.registration_show_password))
+        with open('data/login_data.txt', 'r', encoding='utf8') as data_person:
+            data = data_person.readlines()
+        if data:
+            self.ui.login_login_edit.setText(data[0].rstrip())
+            self.ui.login_password_edit.setText(data[1].rstrip())
 
     def go_to_registration(self):
         self.ui.main_container.setCurrentIndex(2)
@@ -157,8 +246,7 @@ class WindowIndex(qtw.QMainWindow):
         self.ui.main_container.setCurrentIndex(3)
         self.ui.icon_menu_widget.hide()
         self.ui.stackedWidget.setCurrentIndex(0)
-        self.focus = self.ui.test_lessons_div_2__text_button
-        self.ui.test_lessons_div_2__text_button.setFocus()
+        self.ui.title_window.setText('Клавиатурный Тренажер')
 
         self.input_text = LineEdit(self.ui.container_typed_text)
         self.input_text.setMinimumSize(QtCore.QSize(0, 90))
@@ -174,6 +262,36 @@ class WindowIndex(qtw.QMainWindow):
         self.ui.given_text.setText(LINEEDIT.generate_string())
 
         self.init_ui_main_window()
+
+    def leave_button(self, button):
+        button.setIcon(QtGui.QIcon(f'images/{color}/{button.objectName()[:-2]}_inactive.svg'))
+        self.last_focus.setIcon(QtGui.QIcon(f'images/{color}/{self.last_focus.objectName()[:-2]}_inactive.svg'))
+        self.focus.setIcon(QtGui.QIcon(f'images/{color}/{self.focus.objectName()[:-2]}_active.svg'))
+
+        style_active = """color: active;"""
+        style_inactive = """color: inactive;"""
+        style_active = colors.rewrite_qss_for_widget(style_active, color)
+        style_inactive = colors.rewrite_qss_for_widget(style_inactive, color)
+        button.setStyleSheet(style_inactive)
+        self.last_focus.setStyleSheet(style_inactive)
+        self.focus.setStyleSheet(style_active)
+
+    def enter_button(self, button):
+        self.focus.setIcon(QtGui.QIcon(f'images/{color}/{self.focus.objectName()[:-2]}_inactive.svg'))
+        button.setIcon(QtGui.QIcon(f'images/{color}/{button.objectName()[:-2]}_active.svg'))
+
+        style_active = """color: active;"""
+        style_inactive = """color: inactive;"""
+        style_active = colors.rewrite_qss_for_widget(style_active, color)
+        style_inactive = colors.rewrite_qss_for_widget(style_inactive, color)
+        self.focus.setStyleSheet(style_inactive)
+        button.setStyleSheet(style_active)
+
+    def select_focus(self, button):
+        button.setIcon(QtGui.QIcon(f'images/{color}/{button.objectName()[:-2]}_active.svg'))
+        style_active = colors.rewrite_qss_for_widget("""color: active;""", color)
+        self.focus = button
+        button.setStyleSheet(style_active)
 
     def create_list_buttons(self):
         global LIST_BUTTONS
@@ -214,8 +332,27 @@ class WindowIndex(qtw.QMainWindow):
         if text_error == '':
             self.login_hide_error()
             self.go_to_main()
+            with open('data/login_data.txt', 'w', encoding='utf8') as data_person:
+                data_person.write(login + '\n')
+                data_person.write(password)
 
         self.ui.login_error_label.setText(text_error)
+
+    def change_echo_mode(self, button):
+        if button == self.ui.login_show_password:
+            if self.ui.login_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
+                self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
+                self.ui.login_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_active.svg'))
+            else:
+                self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
+                self.ui.login_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
+        else:
+            if self.ui.registration_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
+                self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
+                self.ui.registration_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_active.svg'))
+            else:
+                self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
+                self.ui.registration_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
 
     # registration ================================================================================
 
@@ -289,6 +426,7 @@ class WindowIndex(qtw.QMainWindow):
         LINEEDIT.setText('')
         LINEEDIT.setFocus()
         self.ui.stackedWidget.setCurrentIndex(0)
+        self.ui.title_window.setText('Клавиатурный Тренажер')
         LINEEDIT.OLL_COUNT_LETTER = 0
         LINEEDIT.RIGHT_COUNT_LETTER = 0
         LINEEDIT.COUNT_WORDS = 0
@@ -300,175 +438,183 @@ class WindowIndex(qtw.QMainWindow):
         LINEEDIT.setText('')
         LINEEDIT.setFocus()
         self.ui.stackedWidget.setCurrentIndex(0)
+        self.ui.title_window.setText('Клавиатурный Тренажер')
 
     def init_ui_main_window(self):
         self.ui.refrech_button.clicked.connect(self.generate_text_for_test_result)
         self.ui.next_test_button.clicked.connect(self.generate_text_for_test_result)
         self.ui.refrech_button_2.setEnabled(False)
 
-        self.ui.test_lessons_div_1__text_button.clicked.connect(self.test_lessons_div_1__text_button_toggled)
-        self.ui.test_lessons_div_1__text_button.enterEvent = lambda x: enter_button(
-            self.ui.test_lessons_div_1__text_button)
-        self.ui.test_lessons_div_1__text_button.leaveEvent = self.leave_button
+        self.ui.test_1.clicked.connect(self.test_1)
+        self.ui.test_1.enterEvent = lambda x: self.enter_button(self.ui.test_1)
+        self.ui.test_1.leaveEvent = lambda x: self.leave_button(self.ui.test_1)
 
-        self.ui.test_lessons_div_2__text_button.clicked.connect(self.test_lessons_div_2__text_button_toggled)
-        self.ui.test_lessons_div_2__text_button.enterEvent = lambda x: enter_button(
-            self.ui.test_lessons_div_2__text_button)
-        self.ui.test_lessons_div_2__text_button.leaveEvent = self.leave_button
+        self.ui.test_2.clicked.connect(self.test_2)
+        self.ui.test_2.enterEvent = lambda x: self.enter_button(self.ui.test_2)
+        self.ui.test_2.leaveEvent = lambda x: self.leave_button(self.ui.test_2)
 
-        self.ui.test_lessons_div_2__lessons_button.clicked.connect(self.test_lessons_div_2__lessons_button_toggled)
-        self.ui.test_lessons_div_2__lessons_button.enterEvent = lambda x: enter_button(
-            self.ui.test_lessons_div_2__lessons_button)
-        self.ui.test_lessons_div_2__lessons_button.leaveEvent = self.leave_button
+        self.ui.lessons_2.clicked.connect(self.lessons_2)
+        self.ui.lessons_2.enterEvent = lambda x: self.enter_button(self.ui.lessons_2)
+        self.ui.lessons_2.leaveEvent = lambda x: self.leave_button(self.ui.lessons_2)
 
-        self.ui.test_lessons_div_1__lessons_button.clicked.connect(self.test_lessons_div_1__lessons_button_toggled)
-        self.ui.test_lessons_div_1__lessons_button.enterEvent = lambda x: enter_button(
-            self.ui.test_lessons_div_1__lessons_button)
-        self.ui.test_lessons_div_1__lessons_button.leaveEvent = self.leave_button
+        self.ui.lessons_1.clicked.connect(self.lessons_1)
+        self.ui.lessons_1.enterEvent = lambda x: self.enter_button(self.ui.lessons_1)
+        self.ui.lessons_1.leaveEvent = lambda x: self.leave_button(self.ui.lessons_1)
 
-        self.ui.color_setting_div_1__colors_button.clicked.connect(self.color_setting_div_1__colors_button_toggled)
-        self.ui.color_setting_div_1__colors_button.enterEvent = lambda x: enter_button(
-            self.ui.color_setting_div_1__colors_button)
-        self.ui.color_setting_div_1__colors_button.leaveEvent = self.leave_button
+        self.ui.colors_1.clicked.connect(self.colors_1)
+        self.ui.colors_1.enterEvent = lambda x: self.enter_button(self.ui.colors_1)
+        self.ui.colors_1.leaveEvent = lambda x: self.leave_button(self.ui.colors_1)
 
-        self.ui.color_setting_div_2__color_button.clicked.connect(self.color_setting_div_2__color_button_toggled)
-        self.ui.color_setting_div_2__color_button.enterEvent = lambda x: enter_button(
-            self.ui.color_setting_div_2__color_button)
-        self.ui.color_setting_div_2__color_button.leaveEvent = self.leave_button
+        self.ui.colors_2.clicked.connect(self.colors_2)
+        self.ui.colors_2.enterEvent = lambda x: self.enter_button(self.ui.colors_2)
+        self.ui.colors_2.leaveEvent = lambda x: self.leave_button(self.ui.colors_2)
 
-        self.ui.color_setting_div_1__settings_button.clicked.connect(self.color_setting_div_1__settings_button_toggled)
-        self.ui.color_setting_div_1__settings_button.enterEvent = lambda x: enter_button(
-            self.ui.color_setting_div_1__settings_button)
-        self.ui.color_setting_div_1__settings_button.leaveEvent = self.leave_button
+        self.ui.settings_1.clicked.connect(self.settings_1)
+        self.ui.settings_1.enterEvent = lambda x: self.enter_button(self.ui.settings_1)
+        self.ui.settings_1.leaveEvent = lambda x: self.leave_button(self.ui.settings_1)
 
-        self.ui.color_setting_div_2__setting_button.clicked.connect(self.color_setting_div_2__setting_button_toggled)
-        self.ui.color_setting_div_2__setting_button.enterEvent = lambda x: enter_button(
-            self.ui.color_setting_div_2__setting_button)
-        self.ui.color_setting_div_2__setting_button.leaveEvent = self.leave_button
+        self.ui.settings_2.clicked.connect(self.settings_2)
+        self.ui.settings_2.enterEvent = lambda x: self.enter_button(self.ui.settings_2)
+        self.ui.settings_2.leaveEvent = lambda x: self.leave_button(self.ui.settings_2)
 
-        self.ui.about_profile_div_1__about_button.clicked.connect(self.about_profile_div_1__about_button_toggled)
-        self.ui.about_profile_div_1__about_button.enterEvent = lambda x: enter_button(
-            self.ui.about_profile_div_1__about_button)
-        self.ui.about_profile_div_1__about_button.leaveEvent = self.leave_button
+        self.ui.about_1.clicked.connect(self.about_1)
+        self.ui.about_1.enterEvent = lambda x: self.enter_button(self.ui.about_1)
+        self.ui.about_1.leaveEvent = lambda x: self.leave_button(self.ui.about_1)
 
-        self.ui.about_profile_div_2__about_button.clicked.connect(self.about_profile_div_2__about_button_toggled)
-        self.ui.about_profile_div_2__about_button.enterEvent = lambda x: enter_button(
-            self.ui.about_profile_div_2__about_button)
-        self.ui.about_profile_div_2__about_button.leaveEvent = self.leave_button
+        self.ui.about_2.clicked.connect(self.about_2)
+        self.ui.about_2.enterEvent = lambda x: self.enter_button(self.ui.about_2)
+        self.ui.about_2.leaveEvent = lambda x: self.leave_button(self.ui.about_2)
 
-        self.ui.about_profile_div_1__profile_button.clicked.connect(self.about_profile_div_1__profile_button_toggled)
-        self.ui.about_profile_div_1__profile_button.enterEvent = lambda x: enter_button(
-            self.ui.about_profile_div_1__profile_button)
-        self.ui.about_profile_div_1__profile_button.leaveEvent = self.leave_button
+        self.ui.profile_1.clicked.connect(self.profile_1)
+        self.ui.profile_1.enterEvent = lambda x: self.enter_button(self.ui.profile_1)
+        self.ui.profile_1.leaveEvent = lambda x: self.leave_button(self.ui.profile_1)
 
-        self.ui.about_profile_div_2__profile_button.clicked.connect(self.about_profile_div_2__profile_button_toggled)
-        self.ui.about_profile_div_2__profile_button.enterEvent = lambda x: enter_button(
-            self.ui.about_profile_div_2__profile_button)
-        self.ui.about_profile_div_2__profile_button.leaveEvent = self.leave_button
+        self.ui.profile_2.clicked.connect(self.profile_2)
+        self.ui.profile_2.enterEvent = lambda x: self.enter_button(self.ui.profile_2)
+        self.ui.profile_2.leaveEvent = lambda x: self.leave_button(self.ui.profile_2)
 
-        self.ui.burger.enterEvent = self.enter_for_burger
-        self.ui.burger.leaveEvent = self.leave_for_burger
-        self.ui.burger.clicked.connect(self.leave_button)
+        self.ui.burger_1.clicked.connect(self.burger_1)
+        self.ui.burger_1.enterEvent = lambda x: enter_button_2(self.ui.burger_1)
+        self.ui.burger_1.leaveEvent = lambda x: leave_button_2(self.ui.burger_1)
 
-        self.ui.reset_language.enterEvent = self.enter_for_reset_language
-        self.ui.reset_language.leaveEvent = self.leave_for_reset_language
-        self.ui.reset_language.clicked.connect(self.leave_button)
+        self.ui.reset_language_1.clicked.connect(self.reset_language_1)
+        self.ui.reset_language_1.enterEvent = lambda x: enter_button_2(self.ui.reset_language_1)
+        self.ui.reset_language_1.leaveEvent = lambda x: leave_button_2(self.ui.reset_language_1)
 
-    def enter_for_burger(self, event):
-        self.ui.burger.setIcon(QtGui.QIcon('images/svg_icon/menu_orange.svg'))
-
-    def leave_for_burger(self, event):
-        self.ui.burger.setIcon(QtGui.QIcon('images/svg_icon/menu.svg'))
-
-    def enter_for_reset_language(self, event):
-        self.ui.reset_language.setIcon(QtGui.QIcon('images/svg_icon/globe_orange.svg'))
-
-    def leave_for_reset_language(self, event):
-        self.ui.reset_language.setIcon(QtGui.QIcon('images/svg_icon/globe.svg'))
-
-    def leave_button(self, event):
-        if self.ui.icon_menu_widget.isHidden():
-            if self.ui.stackedWidget.currentWidget().objectName() == 'test':
-                self.ui.test_lessons_div_2__text_button.setFocus()
-            elif self.ui.stackedWidget.currentWidget().objectName() == 'lessons':
-                self.ui.test_lessons_div_2__lessons_button.setFocus()
-            elif self.ui.stackedWidget.currentWidget().objectName() == 'colors':
-                self.ui.color_setting_div_2__color_button.setFocus()
-            elif self.ui.stackedWidget.currentWidget().objectName() == 'setting':
-                self.ui.color_setting_div_2__setting_button.setFocus()
-            elif self.ui.stackedWidget.currentWidget().objectName() == 'about':
-                self.ui.about_profile_div_2__about_button.setFocus()
-            elif self.ui.stackedWidget.currentWidget().objectName() == 'profile':
-                self.ui.about_profile_div_2__profile_button.setFocus()
-        elif self.ui.full_menu_widget.isHidden():
-            if self.ui.stackedWidget.currentWidget().objectName() == 'test':
-                self.ui.test_lessons_div_1__text_button.setFocus()
-            elif self.ui.stackedWidget.currentWidget().objectName() == 'lessons':
-                self.ui.test_lessons_div_1__lessons_button.setFocus()
-            elif self.ui.stackedWidget.currentWidget().objectName() == 'colors':
-                self.ui.color_setting_div_1__colors_button.setFocus()
-            elif self.ui.stackedWidget.currentWidget().objectName() == 'setting':
-                self.ui.color_setting_div_1__settings_button.setFocus()
-            elif self.ui.stackedWidget.currentWidget().objectName() == 'about':
-                self.ui.about_profile_div_1__about_button.setFocus()
-            elif self.ui.stackedWidget.currentWidget().objectName() == 'profile':
-                self.ui.about_profile_div_1__profile_button.setFocus()
+        self.ui.change_color_black_and_white.clicked.connect(
+            lambda x: change_color(self.ui.change_color_black_and_white))
+        self.ui.change_color_native_dark.clicked.connect(
+            lambda x: change_color(self.ui.change_color_native_dark))
+        self.ui.change_color_orange.clicked.connect(
+            lambda x: change_color(self.ui.change_color_orange))
+        self.ui.change_color_redux_dark.clicked.connect(
+            lambda x: change_color(self.ui.change_color_redux_dark))
+        self.ui.change_color_vs_code.clicked.connect(
+            lambda x: change_color(self.ui.change_color_vs_code))
 
     #  function for changing menu page
-    def test_lessons_div_1__text_button_toggled(self):
+
+    def burger_1(self):
+        if self.ui.icon_menu_widget.isHidden():
+            self.focus = self.ui.test_2
+            self.last_focus = self.ui.test_2
+            self.leave_button(self.focus)
+        else:
+            self.focus = self.ui.test_1
+            self.last_focus = self.ui.test_1
+            self.leave_button(self.focus)
+
+    def reset_language_1(self):
+        pass
+
+    def test_1(self):
         self.ui.stackedWidget.setCurrentIndex(0)
-        self.focus = self.ui.test_lessons_div_1__text_button
+        self.ui.title_window.setText('Клавиатурный Тренажер')
+        self.last_focus = self.focus
+        self.focus = self.ui.test_1
+
         LINEEDIT.setFocus()
         self.ui.given_text.setText(LINEEDIT.generate_string())
         self.input_text.setText('')
         self.input_text.setFocus()
 
-    def test_lessons_div_2__text_button_toggled(self):
+    def test_2(self):
         self.ui.stackedWidget.setCurrentIndex(0)
-        self.focus = self.ui.test_lessons_div_2__text_button
+        self.ui.title_window.setText('Клавиатурный Тренажер')
+        self.last_focus = self.focus
+        self.focus = self.ui.test_2
         LINEEDIT.setFocus()
         self.ui.given_text.setText(LINEEDIT.generate_string())
         self.input_text.setText('')
         self.input_text.setFocus()
 
-    def test_lessons_div_2__lessons_button_toggled(self):
+    def lessons_2(self):
         self.ui.stackedWidget.setCurrentIndex(1)
-        self.focus = self.ui.test_lessons_div_2__lessons_button
+        self.ui.title_window.setText('Уроки слепой печати')
+        self.last_focus = self.focus
+        self.focus = self.ui.lessons_2
 
-    def test_lessons_div_1__lessons_button_toggled(self):
+    def lessons_1(self):
         self.ui.stackedWidget.setCurrentIndex(1)
-        self.focus = self.ui.test_lessons_div_1__lessons_button
+        self.ui.title_window.setText('Уроки слепой печати')
+        self.last_focus = self.focus
+        self.focus = self.ui.lessons_1
 
-    def color_setting_div_1__colors_button_toggled(self):
-        pass
+    def colors_1(self):
+        self.ui.stackedWidget.setCurrentIndex(6)
+        self.ui.title_window.setText('Цвета')
+        self.last_focus = self.focus
+        self.focus = self.ui.colors_1
+        for i in self.ui.color_page_container.children()[1:]:
+            if i.objectName().replace('change_color_', '') == color:
+                i.setFocus()
 
-    def color_setting_div_2__color_button_toggled(self):
-        pass
+    def colors_2(self):
+        self.ui.stackedWidget.setCurrentIndex(6)
+        self.ui.title_window.setText('Цвета')
+        self.last_focus = self.focus
+        self.focus = self.ui.colors_2
+        for i in self.ui.color_page_container.children()[1:]:
+            if i.objectName().replace('change_color_', '') == color:
+                i.setFocus()
 
-    def color_setting_div_1__settings_button_toggled(self):
+    def settings_1(self):
         self.ui.stackedWidget.setCurrentIndex(2)
-        self.focus = self.ui.color_setting_div_1__settings_button
+        self.ui.title_window.setText('Настройки')
+        self.last_focus = self.focus
+        self.focus = self.ui.settings_1
 
-    def color_setting_div_2__setting_button_toggled(self):
+    def settings_2(self):
         self.ui.stackedWidget.setCurrentIndex(2)
-        self.focus = self.ui.color_setting_div_2__setting_button
+        self.ui.title_window.setText('Настройки')
+        self.last_focus = self.focus
+        self.focus = self.ui.settings_2
 
-    def about_profile_div_1__about_button_toggled(self):
+    def about_1(self):
         self.ui.stackedWidget.setCurrentIndex(3)
-        self.focus = self.ui.about_profile_div_1__about_button
+        self.ui.title_window.setText('О приложении')
+        self.last_focus = self.focus
+        self.focus = self.ui.about_1
 
-    def about_profile_div_2__about_button_toggled(self):
+    def about_2(self):
         self.ui.stackedWidget.setCurrentIndex(3)
-        self.focus = self.ui.about_profile_div_2__about_button
+        self.ui.title_window.setText('О приложении')
+        self.last_focus = self.focus
+        self.focus = self.ui.about_2
 
-    def about_profile_div_1__profile_button_toggled(self):
+    def profile_1(self):
         self.ui.stackedWidget.setCurrentIndex(4)
-        self.focus = self.ui.about_profile_div_1__profile_button
+        self.ui.title_window.setText('Профиль')
+        self.last_focus = self.focus
+        self.focus = self.ui.profile_1
+
         self.go_to_profile()
 
-    def about_profile_div_2__profile_button_toggled(self):
+    def profile_2(self):
         self.ui.stackedWidget.setCurrentIndex(4)
-        self.focus = self.ui.about_profile_div_2__profile_button
+        self.ui.title_window.setText('Профиль')
+        self.last_focus = self.focus
+        self.focus = self.ui.profile_2
         self.go_to_profile()
 
     def go_to_profile(self):
@@ -482,6 +628,8 @@ class WindowIndex(qtw.QMainWindow):
 
     def show_result(self, wpm, cpm, accuracy):
         self.ui.stackedWidget.setCurrentIndex(5)
+        self.ui.title_window.setText('Результаты текста')
+
         self.ui.value_wpm.setText(f'{wpm}')
         self.ui.value_cpm.setText(f'{cpm}')
         self.ui.value_percent_correct.setText(f'{int(accuracy * 100)}%')
@@ -492,7 +640,9 @@ class WindowIndex(qtw.QMainWindow):
 
 if __name__ == '__main__':
     app = qtw.QApplication(sys.argv)
-    color = 'orange'
+    with open('data/color.txt') as color:
+        color = color.read()
+        print(color)
 
     style_file = colors.rewrite_qss('styles/style.qss', color)
     app.setStyleSheet(style_file)

@@ -3,7 +3,7 @@ import random
 
 import PyQt5.QtWidgets as qtw
 from PyQt5 import QtGui, QtCore
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, QEvent
 
 import colors
 from blidingtype.main_ui import Ui_MainWindow
@@ -22,7 +22,10 @@ def check_login_people():
             if len(data) == 2:
                 login, password = [i.rstrip() for i in data]
                 flag = True
-                lg.check_cor_password_in_db(login, password)
+                if login.count('@') == 0:
+                    lg.check_cor_password_in_db_login(login, password)
+                else:
+                    lg.check_cor_password_in_db_email(login, password)
             elif len(data) == 0 or len(data) == 1:
                 flag = False
                 print('пользователь не зарегистрировался')
@@ -41,7 +44,7 @@ class LineEdit(qtw.QLineEdit):
     RIGHT_COUNT_LETTER = 0
     COUNT_WORDS = 0
     count_second = 0
-    interval_time = 10
+    interval_time = 60
     write = True
     level = 'easy'
 
@@ -172,18 +175,17 @@ class WindowIndex(qtw.QMainWindow):
 
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.initUI()
 
         check_login_people()
         if not flag:
             self.go_to_preview()
         else:
             self.go_to_login()
-        self.initUI()
+
         self.focus = self.ui.test_2
         self.last_focus = self.ui.test_2
         self.select_focus(self.ui.test_2)
-
-    # function for switching window in main_container (QStacketWidget)
 
     def initUI(self):
         self.ui.login_error.setIcon(QtGui.QIcon(f'images/{color}/error_inactive.svg'))
@@ -192,6 +194,10 @@ class WindowIndex(qtw.QMainWindow):
         self.ui.logo_icon_2.setIcon(QtGui.QIcon(f'images/{color}/logo.svg'))
         self.ui.preview_logo.setIcon(QtGui.QIcon(f'images/{color}/logo_big.svg'))
         self.ui.login_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
+
+        self.ui.refrech_button.setIcon(QtGui.QIcon(f'images/{color}/refresh_inactive.svg'))
+        self.ui.refrech_button_2.setIcon(QtGui.QIcon(f'images/{color}/refresh_inactive.svg'))
+        self.ui.next_test_button.setIcon(QtGui.QIcon(f'images/{color}/next_test_inactive.svg'))
         self.ui.registration_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
 
         self.ui.test_1.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.test_1.objectName()[:-2]}_inactive.svg'))
@@ -209,12 +215,6 @@ class WindowIndex(qtw.QMainWindow):
         self.ui.profile_2.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.profile_2.objectName()[:-2]}_inactive.svg'))
 
         self.ui.burger_1.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.burger_1.objectName()[:-2]}_inactive.svg'))
-        self.ui.reset_language_1.setIcon(
-            QtGui.QIcon(f'images/{color}/{self.ui.reset_language_1.objectName()[:-2]}_inactive.svg'))
-        self.ui.refrech_button.setIcon(
-            QtGui.QIcon(f'images/{color}/{self.ui.refrech_button.objectName()}_inactive.svg'))
-        self.ui.next_test_button.setIcon(
-            QtGui.QIcon(f'images/{color}/{self.ui.next_test_button.objectName()}_inactive.svg'))
 
     def go_to_preview(self):
         self.ui.main_container.setCurrentIndex(0)
@@ -227,8 +227,11 @@ class WindowIndex(qtw.QMainWindow):
         self.login_hide_error()
         self.ui.login_registration_button.clicked.connect(self.go_to_registration)
         self.ui.login_show_password.clicked.connect(lambda x: self.change_echo_mode(self.ui.login_show_password))
+        self.ui.login_password_edit.installEventFilter(self)
+
         self.ui.registration_show_password.clicked.connect(
             lambda x: self.change_echo_mode(self.ui.registration_show_password))
+
         with open('data/login_data.txt', 'r', encoding='utf8') as data_person:
             data = data_person.readlines()
         if data:
@@ -240,6 +243,7 @@ class WindowIndex(qtw.QMainWindow):
         self.ui.registration_register_button.clicked.connect(self.registration_data_validity_check)
         self.registration_hide_error()
         self.ui.registration_login_button.clicked.connect(self.go_to_login)
+        self.ui.registration_password_edit.installEventFilter(self)
 
     def go_to_main(self):
         global LINEEDIT
@@ -248,20 +252,54 @@ class WindowIndex(qtw.QMainWindow):
         self.ui.stackedWidget.setCurrentIndex(0)
         self.ui.title_window.setText('Клавиатурный Тренажер')
 
-        self.input_text = LineEdit(self.ui.container_typed_text)
-        self.input_text.setMinimumSize(QtCore.QSize(0, 90))
-        self.input_text.setMaximumSize(QtCore.QSize(1300, 16777215))
-        self.input_text.setText("")
-        self.input_text.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
-        self.input_text.setObjectName("input_text")
-        self.ui.verticalLayout_17.addWidget(self.input_text)
+        if len(self.ui.container_typed_text.children()) < 3:
+            self.input_text = LineEdit(self.ui.container_typed_text)
+            self.input_text.setMinimumSize(QtCore.QSize(0, 90))
+            self.input_text.setMaximumSize(QtCore.QSize(1300, 16777215))
+            self.input_text.setText("")
+            self.input_text.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft)
+            self.input_text.setObjectName("input_text")
+            self.ui.verticalLayout_17.addWidget(self.input_text)
         self.input_text.setFocus()
 
         LINEEDIT = self.input_text
         self.create_list_buttons()
         self.ui.given_text.setText(LINEEDIT.generate_string())
 
+        for i in self.ui.verticalLayout_17.children():
+            print(i.objectName())
+
         self.init_ui_main_window()
+
+    def eventFilter(self, obj, event):
+        style_active = """background: none;
+                    outline: none;
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    border: 1px solid active;
+                    border-left: 0px;
+                    padding: 11px 15px 10px 6px;
+                    """
+        style_inactive = """background: none;
+                    outline: none;
+                    border-top-right-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    border: 1px solid inactive;
+                    border-left: 0px;
+                    padding: 11px 15px 10px 6px;
+                    """
+        style_active = colors.rewrite_qss_for_widget(style_active, color)
+        style_inactive = colors.rewrite_qss_for_widget(style_inactive, color)
+        if obj == self.ui.login_password_edit and event.type() == QEvent.FocusIn:
+            self.ui.login_show_password.setStyleSheet(style_active)
+        if obj == self.ui.registration_password_edit and event.type() == QEvent.FocusIn:
+            self.ui.registration_show_password.setStyleSheet(style_active)
+
+        if obj == self.ui.login_password_edit and event.type() == QEvent.FocusOut:
+            self.ui.login_show_password.setStyleSheet(style_inactive)
+        if obj == self.ui.registration_password_edit and event.type() == QEvent.FocusOut:
+            self.ui.registration_show_password.setStyleSheet(style_inactive)
+        return False
 
     def leave_button(self, button):
         button.setIcon(QtGui.QIcon(f'images/{color}/{button.objectName()[:-2]}_inactive.svg'))
@@ -320,13 +358,21 @@ class WindowIndex(qtw.QMainWindow):
         password = self.ui.login_password_edit.text()
         text_error = ''
         try:
-            lg.check_login_in_db(login)
-            lg.check_cor_password_in_db(login, password)
+            if login.count('@') == 0:
+                lg.check_login_in_db(login)
+                lg.check_cor_password_in_db_login(login, password)
+            else:
+                lg.check_email_in_db(login)
+                lg.check_cor_password_in_db_email(login, password)
+
         except lg.NotLoginInDb:
-            text_error = 'Пользователь не зарегитрирован'
+            text_error = 'Пользователь не зарегиcтрирован'
             self.login_show_error()
         except lg.IncorrectPassword:
             text_error = 'Неверный пароль'
+            self.login_show_error()
+        except lg.NotEmailInDb:
+            text_error = 'Пользователь с такой почтой не зарегистрировался'
             self.login_show_error()
 
         if text_error == '':
@@ -346,6 +392,7 @@ class WindowIndex(qtw.QMainWindow):
             else:
                 self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
                 self.ui.login_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
+            self.ui.login_password_edit.setFocus()
         else:
             if self.ui.registration_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
                 self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
@@ -353,6 +400,7 @@ class WindowIndex(qtw.QMainWindow):
             else:
                 self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
                 self.ui.registration_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
+            self.ui.registration_password_edit.setFocus()
 
     # registration ================================================================================
 

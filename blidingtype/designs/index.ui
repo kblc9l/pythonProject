@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="main_container">
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="preview">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -516,20 +516,20 @@ Typing Skills</string>
                  <item>
                   <widget class="QLineEdit" name="login_password_edit">
                    <property name="inputMethodHints">
-                    <set>Qt::ImhNone</set>
+                    <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
                    </property>
                    <property name="text">
-                    <string>sdsdsd</string>
+                    <string/>
                    </property>
                    <property name="echoMode">
-                    <enum>QLineEdit::Normal</enum>
+                    <enum>QLineEdit::Password</enum>
                    </property>
                    <property name="placeholderText">
                     <string>Password</string>
                    </property>
                   </widget>
                  </item>
-                 <item>
+                 <item alignment="Qt::AlignVCenter">
                   <widget class="QPushButton" name="login_show_password">
                    <property name="minimumSize">
                     <size>
@@ -542,8 +542,8 @@ Typing Skills</string>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>50</width>
-                     <height>50</height>
+                     <width>42</width>
+                     <height>42</height>
                     </size>
                    </property>
                   </widget>
@@ -877,20 +877,20 @@ Typing Skills</string>
                  <item>
                   <widget class="QLineEdit" name="registration_password_edit">
                    <property name="inputMethodHints">
-                    <set>Qt::ImhNone</set>
+                    <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
                    </property>
                    <property name="text">
                     <string/>
                    </property>
                    <property name="echoMode">
-                    <enum>QLineEdit::Normal</enum>
+                    <enum>QLineEdit::Password</enum>
                    </property>
                    <property name="placeholderText">
                     <string>Password</string>
                    </property>
                   </widget>
                  </item>
-                 <item>
+                 <item alignment="Qt::AlignVCenter">
                   <widget class="QPushButton" name="registration_show_password">
                    <property name="minimumSize">
                     <size>
@@ -903,8 +903,8 @@ Typing Skills</string>
                    </property>
                    <property name="iconSize">
                     <size>
-                     <width>50</width>
-                     <height>50</height>
+                     <width>42</width>
+                     <height>42</height>
                     </size>
                    </property>
                   </widget>
@@ -1895,7 +1895,7 @@ Typing Skills</string>
            <item>
             <widget class="QStackedWidget" name="stackedWidget">
              <property name="currentIndex">
-              <number>6</number>
+              <number>5</number>
              </property>
              <widget class="QWidget" name="test_page">
               <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -2026,7 +2026,7 @@ Typing Skills</string>
                        </layout>
                       </widget>
                      </item>
-                     <item alignment="Qt::AlignLeft">
+                     <item>
                       <widget class="QFrame" name="container_butttons">
                        <property name="minimumSize">
                         <size>
@@ -2046,7 +2046,7 @@ Typing Skills</string>
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_9">
+                       <layout class="QVBoxLayout" name="verticalLayout_47">
                         <property name="spacing">
                          <number>0</number>
                         </property>
@@ -2062,7 +2062,7 @@ Typing Skills</string>
                         <property name="bottomMargin">
                          <number>0</number>
                         </property>
-                        <item alignment="Qt::AlignLeft">
+                        <item>
                          <widget class="QPushButton" name="refrech_button">
                           <property name="minimumSize">
                            <size>
@@ -2078,10 +2078,6 @@ Typing Skills</string>
                           </property>
                           <property name="text">
                            <string/>
-                          </property>
-                          <property name="icon">
-                           <iconset>
-                            <normaloff>../images/svg_icon/refresh.svg</normaloff>../images/svg_icon/refresh.svg</iconset>
                           </property>
                           <property name="iconSize">
                            <size>
@@ -4238,7 +4234,7 @@ Typing Skills</string>
                    <number>10</number>
                   </property>
                   <property name="leftMargin">
-                   <number>0</number>
+                   <number>10</number>
                   </property>
                   <property name="topMargin">
                    <number>0</number>
@@ -4266,10 +4262,6 @@ Typing Skills</string>
                     <property name="text">
                      <string/>
                     </property>
-                    <property name="icon">
-                     <iconset>
-                      <normaloff>../images/svg_icon/refresh.svg</normaloff>../images/svg_icon/refresh.svg</iconset>
-                    </property>
                     <property name="iconSize">
                      <size>
                       <width>40</width>
@@ -4295,14 +4287,10 @@ Typing Skills</string>
                     <property name="text">
                      <string/>
                     </property>
-                    <property name="icon">
-                     <iconset>
-                      <normaloff>../images/svg_icon/next_test.svg</normaloff>../images/svg_icon/next_test.svg</iconset>
-                    </property>
                     <property name="iconSize">
                      <size>
                       <width>40</width>
-                      <height>60</height>
+                      <height>40</height>
                      </size>
                     </property>
                    </widget>

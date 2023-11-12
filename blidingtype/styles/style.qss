@@ -79,19 +79,23 @@
     color: background1000;
 }
 
-/* ==========================================  Login and Registration  =========================================*/
+/* ==========================================  Login and Registration and ChangePassword  ==========================*/
 
-#login_title, #registration_title{
+#login_title, #registration_title, #change_password_title{
     font-size: 72px;
     color: background-dominant1;
 }
 
-#login_label_1, #registration_label_1{
+#registration_label_1{
     font-size: 48px;
+}
+#login_label_1{
+    font-size: 27px;
+    padding: 0px 5px;
 }
 
 
-#login_login_edit, #registration_login_edit, #registration_email_edit{
+#login_login_edit, #registration_login_edit, #registration_email_edit, #change_password_login_edit{
 	font-size: 27px;
 	color: background250;
 	padding: 14px 28px;
@@ -100,7 +104,7 @@
 	background-color: background1000;
 }
 
-#login_password_edit, #registration_password_edit{
+#login_password_edit, #registration_password_edit, #change_password_edit{
     font-size: 27px;
 	color: background250;
 	padding: 14px 28px;
@@ -110,7 +114,7 @@
     border-right: 0px;
 	background-color: background1000;
 }
-#login_password_edit::focus, #registration_password_edit::focus{
+#login_password_edit::focus, #registration_password_edit::focus, #change_password_edit::focus{
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border: 1px solid active;
@@ -118,14 +122,14 @@
     color: active;
 }
 
-#login_login_edit::focus, #registration_login_edit::focus, #registration_email_edit::focus{
+#login_login_edit::focus, #registration_login_edit::focus, #registration_email_edit::focus, #change_password_login_edit::focus{
 	border: 1px solid active;
 	border-radius: 5px;
 	color: active;
 }
 
 
-#login_login_button, #registration_register_button{
+#login_login_button, #registration_register_button, #change_password_login_button{
 	color: background-dominant2;
 	background-color: background500;
 	font-size: 27px;
@@ -133,17 +137,17 @@
 	border-radius: 5px;
 
 }
-#login_login_button::hover, #registration_register_button::hover{
+#login_login_button::hover, #registration_register_button::hover, #change_password_login_button::hover{
 	background-color: background-dominant1;
 	color: background500;
 }
 
-#login_login_button::focus, #registration_register_button::focus{
+#login_login_button::focus, #registration_register_button::focus, #change_password_login_button::focus{
     background-color: background-dominant1;
 	color: background500;
 }
 
-#login_registration_button, #registration_login_button{
+#login_registration_button, #registration_login_button, #change_password_button{
     background-color: background1000;
     color: background-dominant1;
     font-family: NotoSans-Italic;
@@ -151,32 +155,32 @@
     border: none;
 }
 
-#login_registration_button:hover, #registration_login_button:hover{
+#login_registration_button:hover, #registration_login_button:hover, #change_password_button::hover{
     color: background-dominant2;
 }
 
-#login_registration_button::focus, #registration_login_button::focus{
+#login_registration_button::focus, #registration_login_button::focus, #change_password_button::focus{
     color: background-dominant2;
 }
 
-#login_error_label, #registration_error_label{
+#login_error_label, #registration_error_label, #change_password_error_label{
     color: background-dominant2;
     font-size: 20px;
     padding: 0 0 0 10px;
 }
 
-#login_error_container, #registration_error_container{
+#login_error_container, #registration_error_container, #change_password_error_container{
     background-color: warning;
     border-radius: 5px;
     padding: 14px 14px;
 }
 
-#login_error, #registration_error{
+#login_error, #registration_error, #change_password_error{
     background-color: warning;
     border: none;
 }
 
-#login_show_password, #registration_show_password{
+#login_show_password, #registration_show_password, #change_password_show_password{
     background: none;
     outline: none;
     border-top-right-radius: 5px;
@@ -186,7 +190,7 @@
     padding: 11px 15px 10px 6px;
 }
 
-#login_show_password::focus, #registration_show_password::focus{
+#login_show_password::focus, #registration_show_password::focus, #change_password_show_password::focus{
     background: none;
     outline: none;
     border-top-right-radius: 5px;

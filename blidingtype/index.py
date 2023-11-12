@@ -189,6 +189,7 @@ class WindowIndex(qtw.QMainWindow):
 
     def initUI(self):
         self.ui.login_error.setIcon(QtGui.QIcon(f'images/{color}/error_inactive.svg'))
+        self.ui.change_password_error.setIcon(QtGui.QIcon(f'images/{color}/error_inactive.svg'))
         self.ui.registration_error.setIcon(QtGui.QIcon(f'images/{color}/error_inactive.svg'))
         self.ui.logo_icon_1.setIcon(QtGui.QIcon(f'images/{color}/logo.svg'))
         self.ui.logo_icon_2.setIcon(QtGui.QIcon(f'images/{color}/logo.svg'))
@@ -199,6 +200,7 @@ class WindowIndex(qtw.QMainWindow):
         self.ui.refrech_button_2.setIcon(QtGui.QIcon(f'images/{color}/refresh_inactive.svg'))
         self.ui.next_test_button.setIcon(QtGui.QIcon(f'images/{color}/next_test_inactive.svg'))
         self.ui.registration_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
+        self.ui.change_password_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
 
         self.ui.test_1.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.test_1.objectName()[:-2]}_inactive.svg'))
         self.ui.lessons_1.setIcon(QtGui.QIcon(f'images/{color}/{self.ui.lessons_1.objectName()[:-2]}_inactive.svg'))
@@ -228,15 +230,25 @@ class WindowIndex(qtw.QMainWindow):
         self.ui.login_registration_button.clicked.connect(self.go_to_registration)
         self.ui.login_show_password.clicked.connect(lambda x: self.change_echo_mode(self.ui.login_show_password))
         self.ui.login_password_edit.installEventFilter(self)
+        self.ui.change_password_button.clicked.connect(self.go_to_change_password)
+        self.ui.login_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
 
         self.ui.registration_show_password.clicked.connect(
             lambda x: self.change_echo_mode(self.ui.registration_show_password))
+        self.ui.change_password_show_password.clicked.connect(
+            lambda x: self.change_echo_mode(self.ui.change_password_show_password))
 
         with open('data/login_data.txt', 'r', encoding='utf8') as data_person:
             data = data_person.readlines()
         if data:
             self.ui.login_login_edit.setText(data[0].rstrip())
             self.ui.login_password_edit.setText(data[1].rstrip())
+
+    def go_to_change_password(self):
+        self.ui.main_container.setCurrentIndex(4)
+        self.ui.change_password_edit.installEventFilter(self)
+        self.ui.change_password_login_button.clicked.connect(self.change_password_data_validity_check)
+        self.change_password_hide_error()
 
     def go_to_registration(self):
         self.ui.main_container.setCurrentIndex(2)
@@ -299,6 +311,12 @@ class WindowIndex(qtw.QMainWindow):
             self.ui.login_show_password.setStyleSheet(style_inactive)
         if obj == self.ui.registration_password_edit and event.type() == QEvent.FocusOut:
             self.ui.registration_show_password.setStyleSheet(style_inactive)
+
+        if obj == self.ui.change_password_edit and event.type() == QEvent.FocusIn:
+            self.ui.change_password_show_password.setStyleSheet(style_active)
+        if obj == self.ui.change_password_edit and event.type() == QEvent.FocusOut:
+            self.ui.change_password_show_password.setStyleSheet(style_inactive)
+
         return False
 
     def leave_button(self, button):
@@ -393,7 +411,7 @@ class WindowIndex(qtw.QMainWindow):
                 self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
                 self.ui.login_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
             self.ui.login_password_edit.setFocus()
-        else:
+        elif button == self.ui.registration_password_edit:
             if self.ui.registration_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
                 self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
                 self.ui.registration_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_active.svg'))
@@ -401,6 +419,14 @@ class WindowIndex(qtw.QMainWindow):
                 self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
                 self.ui.registration_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
             self.ui.registration_password_edit.setFocus()
+        else:
+            if self.ui.change_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
+                self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
+                self.ui.change_password_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_active.svg'))
+            else:
+                self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
+                self.ui.change_password_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
+            self.ui.change_password_edit.setFocus()
 
     # registration ================================================================================
 
@@ -413,6 +439,16 @@ class WindowIndex(qtw.QMainWindow):
         self.ui.registration_error_label.show()
         self.ui.registration_error.show()
         self.ui.registration_error_container.show()
+
+    def change_password_hide_error(self):
+        self.ui.change_password_error_label.hide()
+        self.ui.change_password_error.hide()
+        self.ui.change_password_error_container.hide()
+
+    def change_password_show_error(self):
+        self.ui.change_password_error_label.show()
+        self.ui.change_password_error.show()
+        self.ui.change_password_error_container.show()
 
     def registration_data_validity_check(self):
         login = self.ui.registration_login_edit.text()
@@ -464,6 +500,49 @@ class WindowIndex(qtw.QMainWindow):
         if self.ui.registration_error_label.text() == '':
             self.registration_hide_error()
             registration.entry_to_db(login, email, password)
+            self.go_to_login()
+
+    def change_password_data_validity_check(self):
+        login = self.ui.change_password_login_edit.text()
+        password = self.ui.change_password_edit.text()
+        text_error = ''
+
+        try:  # check password
+            check_password.check_password(password)
+        except check_password.LengthError:
+            text_error = 'Пароль должен быть длинной не менее 8 символов'
+            self.change_password_show_error()
+        except check_password.LetterError:
+            text_error = 'Пароль должен иметь буквы разного регистра'
+            self.change_password_show_error()
+        except check_password.DigitError:
+            text_error = 'Пароль должен иметь цифры'
+            self.change_password_show_error()
+        except check_password.SequenceError:
+            text_error = 'Пароль не должен содержать комбинации символов'
+            self.change_password_show_error()
+
+        except check_password.SpaceError:
+            text_error = 'Пароль не должен содержать пробелов'
+            self.change_password_show_error()
+
+        try:
+            if login.count('@') == 0:
+                lg.check_login_in_db(login)
+            else:
+                lg.check_email_in_db(login)
+
+        except lg.NotLoginInDb:
+            text_error = 'Пользователь не зарегиcтрирован'
+            self.change_password_show_error()
+        except lg.NotEmailInDb:
+            text_error = 'Пользователь с такой почтой не зарегистрировался'
+            self.change_password_show_error()
+
+        self.ui.change_password_error_label.setText(text_error)
+        if self.ui.registration_error_label.text() == '':
+            self.change_password_hide_error()
+            lg.change_password(login, password)
             self.go_to_login()
 
     # main ================================================================================

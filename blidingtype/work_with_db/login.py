@@ -59,5 +59,12 @@ def check_email_in_db(email):
         raise NotEmailInDb('Login not in db')
 
 
-def change_password(email='', login='', new_password=''):
-    pass
+def change_password(login, new_password):
+    con = sqlite3.connect('database.sqlite')
+    cur = con.cursor()
+    if login.count('@') == 0:
+        cur.execute(f"""UPDATE people SET password = '{new_password}' WHERE login = '{login}'""")
+    else:
+        cur.execute(f"""UPDATE people SET password = '{new_password}' WHERE email = '{login}'""")
+    con.commit()
+    cur.close()

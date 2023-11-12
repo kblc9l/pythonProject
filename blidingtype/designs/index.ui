@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="main_container">
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="preview">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -588,14 +588,21 @@ Typing Skills</string>
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="login_label">
+                  <widget class="QPushButton" name="change_password_button">
                    <property name="font">
                     <font>
                      <pointsize>14</pointsize>
                     </font>
                    </property>
                    <property name="text">
-                    <string>Not a member yet?</string>
+                    <string>Change password!</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="login_label_1">
+                   <property name="text">
+                    <string>or</string>
                    </property>
                   </widget>
                  </item>
@@ -4366,6 +4373,264 @@ Typing Skills</string>
                </item>
               </layout>
              </widget>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="change_password">
+       <layout class="QVBoxLayout" name="verticalLayout_100">
+        <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+         <widget class="QFrame" name="change_password_container">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_48">
+           <property name="spacing">
+            <number>20</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>400</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QFrame" name="change_password_texts">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_49">
+              <property name="spacing">
+               <number>10</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item alignment="Qt::AlignHCenter">
+               <widget class="QLabel" name="change_password_title">
+                <property name="font">
+                 <font>
+                  <pointsize>40</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Change password</string>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignHCenter">
+               <widget class="QLabel" name="change_password_subtext">
+                <property name="font">
+                 <font>
+                  <pointsize>18</pointsize>
+                 </font>
+                </property>
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="text">
+                 <string>Please Enter your Login and new Password</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="frame_13">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_50">
+              <property name="spacing">
+               <number>15</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLineEdit" name="change_password_login_edit">
+                <property name="inputMask">
+                 <string/>
+                </property>
+                <property name="frame">
+                 <bool>true</bool>
+                </property>
+                <property name="placeholderText">
+                 <string>Login or Email</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="frame_14">
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_22">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLineEdit" name="change_password_edit">
+                   <property name="inputMethodHints">
+                    <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="echoMode">
+                    <enum>QLineEdit::Password</enum>
+                   </property>
+                   <property name="placeholderText">
+                    <string>Password</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item alignment="Qt::AlignVCenter">
+                  <widget class="QPushButton" name="change_password_show_password">
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>50</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>42</width>
+                     <height>42</height>
+                    </size>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="change_password_login_button">
+                <property name="font">
+                 <font>
+                  <pointsize>15</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Change</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item alignment="Qt::AlignRight|Qt::AlignBottom">
+         <widget class="QFrame" name="change_password_error_container">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_43">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item alignment="Qt::AlignVCenter">
+            <widget class="QPushButton" name="change_password_error">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>48</width>
+               <height>48</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignVCenter">
+            <widget class="QLabel" name="change_password_error_label">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>adadadsad</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
             </widget>
            </item>
           </layout>

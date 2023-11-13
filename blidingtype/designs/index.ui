@@ -18,7 +18,7 @@
     <item>
      <widget class="QStackedWidget" name="main_container">
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="preview">
        <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1902,7 +1902,7 @@ Typing Skills</string>
            <item>
             <widget class="QStackedWidget" name="stackedWidget">
              <property name="currentIndex">
-              <number>5</number>
+              <number>2</number>
              </property>
              <widget class="QWidget" name="test_page">
               <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -1964,7 +1964,7 @@ Typing Skills</string>
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_16">
                      <property name="spacing">
-                      <number>0</number>
+                      <number>20</number>
                      </property>
                      <property name="leftMargin">
                       <number>0</number>
@@ -1994,7 +1994,7 @@ Typing Skills</string>
                        </property>
                        <layout class="QVBoxLayout" name="verticalLayout_17">
                         <property name="spacing">
-                         <number>0</number>
+                         <number>10</number>
                         </property>
                         <property name="leftMargin">
                          <number>0</number>
@@ -3301,11 +3301,48 @@ Typing Skills</string>
                <property name="bottomMargin">
                 <number>0</number>
                </property>
-               <item>
-                <widget class="QLabel" name="label_4">
-                 <property name="text">
-                  <string>Setting</string>
+               <item alignment="Qt::AlignLeft|Qt::AlignTop">
+                <widget class="QFrame" name="keyboard_setting">
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
                  </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_9">
+                  <property name="spacing">
+                   <number>10</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>15</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>15</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item alignment="Qt::AlignVCenter">
+                   <widget class="QLabel" name="keyboard_setting_label">
+                    <property name="text">
+                     <string>Клавиатура</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item alignment="Qt::AlignHCenter">
+                   <widget class="QRadioButton" name="keyboard_setting_radio_button">
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
                </item>
               </layout>

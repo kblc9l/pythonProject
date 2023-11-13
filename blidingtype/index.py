@@ -10,6 +10,8 @@ from blidingtype.main_ui import Ui_MainWindow
 from work_with_db import login as lg
 from checks import check_password, check_email, check_login
 from work_with_db import registration, test_result, profile
+from sys import argv, executable
+import os
 
 flag = None
 
@@ -17,7 +19,8 @@ flag = None
 def check_login_people():
     global flag
     try:
-        with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/login_data.txt', 'r', encoding='utf8') as data_person:
+        with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/login_data.txt', 'r',
+                  encoding='utf8') as data_person:
             data = data_person.readlines()
             if len(data) == 2:
                 login, password = [i.rstrip() for i in data]
@@ -66,8 +69,8 @@ class LineEdit(qtw.QLineEdit):
             self.write = False
             self.count_second = 0
             print('таймер остановился')
-            if ex1.ui.stackedWidget.currentIndex() == 0:
-                WindowIndex.show_result(ex1, self.COUNT_WORDS, self.RIGHT_COUNT_LETTER,
+            if WindowIndex.singleton.ui.stackedWidget.currentIndex() == 0:
+                WindowIndex.show_result(WindowIndex.singleton, self.COUNT_WORDS, self.RIGHT_COUNT_LETTER,
                                         self.RIGHT_COUNT_LETTER / self.OLL_COUNT_LETTER)
 
     def keyPressEvent(self, e):
@@ -100,10 +103,11 @@ class LineEdit(qtw.QLineEdit):
                 else:
                     wrong_letter()
             else:
-                WindowIndex.generate_text_for_update(ex1)
+                WindowIndex.generate_text_for_update(WindowIndex.singleton)
 
     def generate_string(self):
-        with open(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/{self.level}_words.txt', 'r', encoding='utf8') as f:
+        with open(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/{self.level}_words.txt', 'r',
+                  encoding='utf8') as f:
             f = f.read().split()
             s = ''
             while len(s) <= 55:
@@ -154,20 +158,28 @@ def wrong_letter():
 
 
 def enter_button_2(button):
-    button.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{button.objectName()[:-2]}_active.svg'))
+    button.setIcon(QtGui.QIcon(
+        f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{button.objectName()[:-2]}_active.svg'))
 
 
 def leave_button_2(button):
-    button.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{button.objectName()[:-2]}_inactive.svg'))
+    button.setIcon(QtGui.QIcon(
+        f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{button.objectName()[:-2]}_inactive.svg'))
 
 
 def change_color(button):
-    with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/color.txt', 'w', encoding='utf8') as f:
+    with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/color.txt', 'w',
+              encoding='utf8') as f:
         f.write(str(button.objectName().replace('change_color_', '')))
         f.close()
 
+        WindowIndex.restart()
+
 
 class WindowIndex(qtw.QMainWindow):
+    singleton: 'WindowIndex' = None
+    global app
+
     def __init__(self):
         super().__init__()
         self.buttons = []
@@ -176,6 +188,7 @@ class WindowIndex(qtw.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.initUI()
+        self.showMaximized()
 
         check_login_people()
         if not flag:
@@ -187,36 +200,91 @@ class WindowIndex(qtw.QMainWindow):
         self.last_focus = self.ui.test_2
         self.select_focus(self.ui.test_2)
 
+    @staticmethod
+    def restart():
+        msg = qtw.QMessageBox()
+        msg.setWindowTitle("Изменение цветовой палитры")
+        msg.setText('Для изменения цвета нужно перезагрузить приложение')
+        msg.setIcon(qtw.QMessageBox.Warning)
+        msg.setStandardButtons(qtw.QMessageBox.Ok | qtw.QMessageBox.Cancel)
+        msg.setDefaultButton(qtw.QMessageBox.Ok)
+
+        res = msg.exec()
+
+        if res == qtw.QMessageBox.Ok:
+            WindowIndex.singleton.close()
+            change_color_2()
+            style_file = colors.rewrite_qss(
+                'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/styles/style.qss',
+                color)
+            app.setStyleSheet(style_file)
+
+            WindowIndex.singleton = WindowIndex()
+
+    @staticmethod
+    def start():
+        change_color_2()
+        style_file = colors.rewrite_qss(
+            'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/styles/style.qss',
+            color)
+        app.setStyleSheet(style_file)
+        WindowIndex.singleton = WindowIndex()
+
     def initUI(self):
-        self.ui.login_error.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/error_inactive.svg'))
-        self.ui.change_password_error.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/error_inactive.svg'))
-        self.ui.registration_error.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/error_inactive.svg'))
-        self.ui.logo_icon_1.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/logo.svg'))
-        self.ui.logo_icon_2.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/logo.svg'))
-        self.ui.preview_logo.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/logo_big.svg'))
-        self.ui.login_show_password.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
+        self.ui.login_error.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/error_inactive.svg'))
+        self.ui.change_password_error.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/error_inactive.svg'))
+        self.ui.registration_error.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/error_inactive.svg'))
+        self.ui.logo_icon_1.setIcon(
+            QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/logo.svg'))
+        self.ui.logo_icon_2.setIcon(
+            QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/logo.svg'))
+        self.ui.preview_logo.setIcon(
+            QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/logo_big.svg'))
+        self.ui.login_show_password.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
 
-        self.ui.refrech_button.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/refresh_inactive.svg'))
-        self.ui.refrech_button_2.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/refresh_inactive.svg'))
-        self.ui.next_test_button.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/next_test_inactive.svg'))
-        self.ui.registration_show_password.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
-        self.ui.change_password_show_password.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
+        self.ui.refrech_button.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/refresh_inactive.svg'))
+        self.ui.refrech_button_2.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/refresh_inactive.svg'))
+        self.ui.next_test_button.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/next_test_inactive.svg'))
+        self.ui.registration_show_password.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
+        self.ui.change_password_show_password.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
 
-        self.ui.test_1.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.test_1.objectName()[:-2]}_inactive.svg'))
-        self.ui.lessons_1.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.lessons_1.objectName()[:-2]}_inactive.svg'))
-        self.ui.colors_1.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.colors_1.objectName()[:-2]}_inactive.svg'))
-        self.ui.settings_1.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.settings_1.objectName()[:-2]}_inactive.svg'))
-        self.ui.about_1.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.about_1.objectName()[:-2]}_inactive.svg'))
-        self.ui.profile_1.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.profile_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.test_1.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.test_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.lessons_1.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.lessons_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.colors_1.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.colors_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.settings_1.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.settings_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.about_1.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.about_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.profile_1.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.profile_1.objectName()[:-2]}_inactive.svg'))
 
-        self.ui.test_2.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.test_2.objectName()[:-2]}_inactive.svg'))
-        self.ui.lessons_2.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.lessons_2.objectName()[:-2]}_inactive.svg'))
-        self.ui.colors_2.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.colors_2.objectName()[:-2]}_inactive.svg'))
-        self.ui.settings_2.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.settings_2.objectName()[:-2]}_inactive.svg'))
-        self.ui.about_2.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.about_2.objectName()[:-2]}_inactive.svg'))
-        self.ui.profile_2.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.profile_2.objectName()[:-2]}_inactive.svg'))
+        self.ui.test_2.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.test_2.objectName()[:-2]}_inactive.svg'))
+        self.ui.lessons_2.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.lessons_2.objectName()[:-2]}_inactive.svg'))
+        self.ui.colors_2.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.colors_2.objectName()[:-2]}_inactive.svg'))
+        self.ui.settings_2.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.settings_2.objectName()[:-2]}_inactive.svg'))
+        self.ui.about_2.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.about_2.objectName()[:-2]}_inactive.svg'))
+        self.ui.profile_2.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.profile_2.objectName()[:-2]}_inactive.svg'))
 
-        self.ui.burger_1.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.burger_1.objectName()[:-2]}_inactive.svg'))
+        self.ui.burger_1.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.ui.burger_1.objectName()[:-2]}_inactive.svg'))
 
     def go_to_preview(self):
         self.ui.main_container.setCurrentIndex(0)
@@ -231,14 +299,16 @@ class WindowIndex(qtw.QMainWindow):
         self.ui.login_show_password.clicked.connect(lambda x: self.change_echo_mode(self.ui.login_show_password))
         self.ui.login_password_edit.installEventFilter(self)
         self.ui.change_password_button.clicked.connect(self.go_to_change_password)
-        self.ui.login_show_password.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
+        self.ui.login_show_password.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
 
         self.ui.registration_show_password.clicked.connect(
             lambda x: self.change_echo_mode(self.ui.registration_show_password))
         self.ui.change_password_show_password.clicked.connect(
             lambda x: self.change_echo_mode(self.ui.change_password_show_password))
 
-        with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/login_data.txt', 'r', encoding='utf8') as data_person:
+        with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/login_data.txt', 'r',
+                  encoding='utf8') as data_person:
             data = data_person.readlines()
         if data:
             self.ui.login_login_edit.setText(data[0].rstrip())
@@ -320,9 +390,12 @@ class WindowIndex(qtw.QMainWindow):
         return False
 
     def leave_button(self, button):
-        button.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{button.objectName()[:-2]}_inactive.svg'))
-        self.last_focus.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.last_focus.objectName()[:-2]}_inactive.svg'))
-        self.focus.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.focus.objectName()[:-2]}_active.svg'))
+        button.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{button.objectName()[:-2]}_inactive.svg'))
+        self.last_focus.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.last_focus.objectName()[:-2]}_inactive.svg'))
+        self.focus.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.focus.objectName()[:-2]}_active.svg'))
 
         style_active = """color: active;"""
         style_inactive = """color: inactive;"""
@@ -333,8 +406,10 @@ class WindowIndex(qtw.QMainWindow):
         self.focus.setStyleSheet(style_active)
 
     def enter_button(self, button):
-        self.focus.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.focus.objectName()[:-2]}_inactive.svg'))
-        button.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{button.objectName()[:-2]}_active.svg'))
+        self.focus.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{self.focus.objectName()[:-2]}_inactive.svg'))
+        button.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{button.objectName()[:-2]}_active.svg'))
 
         style_active = """color: active;"""
         style_inactive = """color: inactive;"""
@@ -344,7 +419,8 @@ class WindowIndex(qtw.QMainWindow):
         button.setStyleSheet(style_active)
 
     def select_focus(self, button):
-        button.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{button.objectName()[:-2]}_active.svg'))
+        button.setIcon(QtGui.QIcon(
+            f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/{button.objectName()[:-2]}_active.svg'))
         style_active = colors.rewrite_qss_for_widget("""color: active;""", color)
         self.focus = button
         button.setStyleSheet(style_active)
@@ -396,7 +472,8 @@ class WindowIndex(qtw.QMainWindow):
         if text_error == '':
             self.login_hide_error()
             self.go_to_main()
-            with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/login_data.txt', 'w', encoding='utf8') as data_person:
+            with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/login_data.txt', 'w',
+                      encoding='utf8') as data_person:
                 data_person.write(login + '\n')
                 data_person.write(password)
 
@@ -406,26 +483,32 @@ class WindowIndex(qtw.QMainWindow):
         if button == self.ui.login_show_password:
             if self.ui.login_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
                 self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
-                self.ui.login_show_password.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_active.svg'))
+                self.ui.login_show_password.setIcon(QtGui.QIcon(
+                    f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_active.svg'))
             else:
                 self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
-                self.ui.login_show_password.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
+                self.ui.login_show_password.setIcon(QtGui.QIcon(
+                    f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
             self.ui.login_password_edit.setFocus()
         elif button == self.ui.registration_password_edit:
             if self.ui.registration_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
                 self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
-                self.ui.registration_show_password.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_active.svg'))
+                self.ui.registration_show_password.setIcon(QtGui.QIcon(
+                    f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_active.svg'))
             else:
                 self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
-                self.ui.registration_show_password.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
+                self.ui.registration_show_password.setIcon(QtGui.QIcon(
+                    f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
             self.ui.registration_password_edit.setFocus()
         else:
             if self.ui.change_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
                 self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
-                self.ui.change_password_show_password.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_active.svg'))
+                self.ui.change_password_show_password.setIcon(QtGui.QIcon(
+                    f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_active.svg'))
             else:
                 self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
-                self.ui.change_password_show_password.setIcon(QtGui.QIcon(f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
+                self.ui.change_password_show_password.setIcon(QtGui.QIcon(
+                    f'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/images/{color}/eye_inactive.svg'))
             self.ui.change_password_edit.setFocus()
 
     # registration ================================================================================
@@ -710,12 +793,39 @@ class WindowIndex(qtw.QMainWindow):
         self.ui.title_window.setText('Настройки')
         self.last_focus = self.focus
         self.focus = self.ui.settings_1
+        settings = change_setting()
+
+        self.ui.keyboard_setting_radio_button.toggled.connect(self.change_setting_2)
+        if settings[0] == 'True':
+            self.ui.keyboard.show()
+        else:
+            self.ui.keyboard.hide()
 
     def settings_2(self):
         self.ui.stackedWidget.setCurrentIndex(2)
         self.ui.title_window.setText('Настройки')
         self.last_focus = self.focus
-        self.focus = self.ui.settings_2
+        self.focus = self.ui.settings_1
+        settings = change_setting()
+        self.ui.keyboard_setting_radio_button.toggled.connect(self.change_setting_2)
+        if settings[0] == 'True':
+            self.ui.keyboard.show()
+        else:
+            self.ui.keyboard.hide()
+
+    def change_setting_2(self):
+        print(2243234234234)
+        with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/settings.txt', 'w',
+                  encoding='utf8') as settings:
+            if self.ui.keyboard_setting_radio_button.isChecked():
+                settings.write('True')
+            else:
+                settings.write('False')
+        settings = change_setting()
+        if settings[0] == 'True':
+            self.ui.keyboard.show()
+        else:
+            self.ui.keyboard.hide()
 
     def about_1(self):
         self.ui.stackedWidget.setCurrentIndex(3)
@@ -765,16 +875,46 @@ class WindowIndex(qtw.QMainWindow):
         test_result.write_test_result_in_db(wpm, cpm, int(accuracy * 100))
 
 
-if __name__ == '__main__':
-    app = qtw.QApplication(sys.argv)
+# if __name__ == '__main__':
+#     app = qtw.QApplication(sys.argv)
+#     with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/color.txt') as color:
+#         color = color.read()
+#         print(color)
+#
+#     style_file = colors.rewrite_qss('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/styles/style.qss',
+#                                     color)
+#     app.setStyleSheet(style_file)
+#
+#     ex1 = WindowIndex()
+#     ex1.showMaximized()
+#
+#     sys.exit(app.exec())
+
+
+color: str
+app = None
+
+
+def change_color_2():
+    global color
     with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/color.txt') as color:
         color = color.read()
         print(color)
 
-    style_file = colors.rewrite_qss('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/styles/style.qss', color)
-    app.setStyleSheet(style_file)
 
-    ex1 = WindowIndex()
-    ex1.showMaximized()
+def change_setting():
+    with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/settings.txt') as settings:
+        settings = [i.rstrip() for i in settings.readlines()]
+        return settings
 
+
+def main():
+    global app
+    app = qtw.QApplication(sys.argv)
+
+    WindowIndex.start()
     sys.exit(app.exec())
+
+
+if __name__ == '__main__':
+    main()

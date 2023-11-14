@@ -5,13 +5,6 @@ class NotLoginInDb(Exception):
     pass
 
 
-import sqlite3
-
-
-class NotLoginInDb(Exception):
-    pass
-
-
 class IncorrectPassword(Exception):
     pass
 

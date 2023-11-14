@@ -626,10 +626,11 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
         except check_password.SequenceError:
             text_error = 'Пароль не должен содержать комбинации символов'
             self.change_password_show_error()
-
         except check_password.SpaceError:
             text_error = 'Пароль не должен содержать пробелов'
             self.change_password_show_error()
+        except Exception as er:
+            print(er)
 
         try:
             if login.count('@') == 0:
@@ -643,11 +644,14 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
         except lg.NotEmailInDb:
             text_error = 'Пользователь с такой почтой не зарегистрировался'
             self.change_password_show_error()
+        except Exception as er:
+            print(er)
 
         self.ui.change_password_error_label.setText(text_error)
-        if self.ui.registration_error_label.text() == '':
+        if self.ui.change_password_error_label.text() == '':
             self.change_password_hide_error()
             lg.change_password(login, password)
+            print(login ,password)
             self.go_to_login()
 
     # main ================================================================================

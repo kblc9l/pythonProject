@@ -301,6 +301,15 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
         self.ui.burger_1.setIcon(QtGui.QIcon(
             f'{SYS_PATH}/images/{color}/{self.ui.burger_1.objectName()[:-2]}_inactive.svg'))
 
+        self.ui.login_password_edit.installEventFilter(self)
+        self.ui.login_show_password.clicked.connect(lambda x: self.change_echo_mode(self.ui.login_show_password))
+        self.ui.change_password_edit.installEventFilter(self)
+        self.ui.change_password_show_password.clicked.connect(
+            lambda x: self.change_echo_mode(self.ui.change_password_show_password))
+        self.ui.registration_password_edit.installEventFilter(self)
+        self.ui.registration_show_password.clicked.connect(
+            lambda x: self.change_echo_mode(self.ui.registration_show_password))
+
     # функции переходов между разделами ================================
     def go_to_preview(self):
         self.ui.main_container.setCurrentIndex(0)
@@ -308,21 +317,14 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
         self.ui.preview_login_button.clicked.connect(self.go_to_login)
 
     def go_to_login(self):
-        self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
         self.ui.main_container.setCurrentIndex(1)
         self.ui.login_login_button.clicked.connect(self.login_data_validity_check)
         self.login_hide_error()
         self.ui.login_registration_button.clicked.connect(self.go_to_registration)
-        self.ui.login_show_password.clicked.connect(lambda x: self.change_echo_mode(self.ui.login_show_password))
-        self.ui.login_password_edit.installEventFilter(self)
         self.ui.change_password_button.clicked.connect(self.go_to_change_password)
-        self.ui.login_show_password.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
 
-        self.ui.registration_show_password.clicked.connect(
-            lambda x: self.change_echo_mode(self.ui.registration_show_password))
-        self.ui.change_password_show_password.clicked.connect(
-            lambda x: self.change_echo_mode(self.ui.change_password_show_password))
+        self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
+        self.ui.login_show_password.setIcon(QtGui.QIcon(f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
 
         with open(f'{SYS_PATH}/data/login_data.txt', 'r',
                   encoding='utf8') as data_person:
@@ -332,20 +334,22 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
             self.ui.login_password_edit.setText(data[1].rstrip())
 
     def go_to_change_password(self):
-        self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
         self.ui.main_container.setCurrentIndex(4)
-        self.ui.change_password_edit.installEventFilter(self)
         self.ui.change_password_login_button.clicked.connect(self.change_password_data_validity_check)
         self.ui.change_password_login_button_2.clicked.connect(self.go_to_login)
         self.change_password_hide_error()
 
+        self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
+        self.ui.change_password_show_password.setIcon(QtGui.QIcon(f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+
     def go_to_registration(self):
-        self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
         self.ui.main_container.setCurrentIndex(2)
         self.ui.registration_register_button.clicked.connect(self.registration_data_validity_check)
         self.registration_hide_error()
         self.ui.registration_login_button.clicked.connect(self.go_to_login)
-        self.ui.registration_password_edit.installEventFilter(self)
+
+        self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
+        self.ui.registration_show_password.setIcon(QtGui.QIcon(f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
 
     def go_to_main(self):
         global LINEEDIT
@@ -405,20 +409,63 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
         style_inactive = colors.rewrite_qss_for_widget(style_inactive, color)
         if obj == self.ui.login_password_edit and event.type() == QEvent.FocusIn:
             self.ui.login_show_password.setStyleSheet(style_active)
+            print('login_show_password FocusIn')
         if obj == self.ui.registration_password_edit and event.type() == QEvent.FocusIn:
             self.ui.registration_show_password.setStyleSheet(style_active)
+            print('registration_show_password FocusIn')
+        if obj == self.ui.change_password_edit and event.type() == QEvent.FocusIn:
+            self.ui.change_password_show_password.setStyleSheet(style_active)
+            print('change_password_show_password FocusIn')
 
         if obj == self.ui.login_password_edit and event.type() == QEvent.FocusOut:
             self.ui.login_show_password.setStyleSheet(style_inactive)
+            print('login_show_password FocusOut')
         if obj == self.ui.registration_password_edit and event.type() == QEvent.FocusOut:
             self.ui.registration_show_password.setStyleSheet(style_inactive)
-
-        if obj == self.ui.change_password_edit and event.type() == QEvent.FocusIn:
-            self.ui.change_password_show_password.setStyleSheet(style_active)
+            print('registration_show_password FocusOut')
         if obj == self.ui.change_password_edit and event.type() == QEvent.FocusOut:
             self.ui.change_password_show_password.setStyleSheet(style_inactive)
+            print('change_password_show_password FocusOut')
 
         return False
+
+    def change_echo_mode(self, button):
+        if button == self.ui.login_show_password:
+            if self.ui.login_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
+                self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
+                self.ui.login_show_password.setIcon(QtGui.QIcon(
+                    f'{SYS_PATH}/images/{color}/eye_active.svg'))
+                print('login_password_edit Normal')
+            else:
+                self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
+                self.ui.login_show_password.setIcon(QtGui.QIcon(
+                    f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+                print('login_password_edit Password')
+            self.ui.login_password_edit.setFocus()
+        elif button == self.ui.registration_show_password:
+            if self.ui.registration_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
+                self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
+                self.ui.registration_show_password.setIcon(QtGui.QIcon(
+                    f'{SYS_PATH}/images/{color}/eye_active.svg'))
+                print('registration_show_password Normal')
+            else:
+                self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
+                self.ui.registration_show_password.setIcon(QtGui.QIcon(
+                    f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+                print('registration_show_password Password')
+            self.ui.registration_password_edit.setFocus()
+        elif button == self.ui.change_password_show_password:
+            if self.ui.change_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
+                self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
+                self.ui.change_password_show_password.setIcon(QtGui.QIcon(
+                    f'{SYS_PATH}/images/{color}/eye_active.svg'))
+                print('change_password_edit Normal')
+            else:
+                self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
+                self.ui.change_password_show_password.setIcon(QtGui.QIcon(
+                    f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+            self.ui.change_password_edit.setFocus()
+            print('change_password_edit Password')
 
     def leave_button(self, button):
         button.setIcon(QtGui.QIcon(
@@ -455,38 +502,6 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
         style_active = colors.rewrite_qss_for_widget("""color: active;""", color)
         self.focus = button
         button.setStyleSheet(style_active)
-
-    def change_echo_mode(self, button):
-        if button == self.ui.login_show_password:
-            if self.ui.login_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
-                self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
-                self.ui.login_show_password.setIcon(QtGui.QIcon(
-                    f'{SYS_PATH}/images/{color}/eye_active.svg'))
-            else:
-                self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
-                self.ui.login_show_password.setIcon(QtGui.QIcon(
-                    f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
-            self.ui.login_password_edit.setFocus()
-        elif button == self.ui.registration_show_password:
-            if self.ui.registration_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
-                self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
-                self.ui.registration_show_password.setIcon(QtGui.QIcon(
-                    f'{SYS_PATH}/images/{color}/eye_active.svg'))
-            else:
-                self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
-                self.ui.registration_show_password.setIcon(QtGui.QIcon(
-                    f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
-            self.ui.registration_password_edit.setFocus()
-        elif button == self.ui.change_password_show_password:
-            if self.ui.change_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
-                self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
-                self.ui.change_password_show_password.setIcon(QtGui.QIcon(
-                    f'{SYS_PATH}/images/{color}/eye_active.svg'))
-            else:
-                self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
-                self.ui.change_password_show_password.setIcon(QtGui.QIcon(
-                    f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
-            self.ui.change_password_edit.setFocus()
 
     # login ================================================================================
 
@@ -651,7 +666,7 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
         if self.ui.change_password_error_label.text() == '':
             self.change_password_hide_error()
             lg.change_password(login, password)
-            print(login ,password)
+            print(login, password)
             self.go_to_login()
 
     # main ================================================================================

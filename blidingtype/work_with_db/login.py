@@ -18,7 +18,7 @@ class NotEmailInDb(Exception):
 
 
 def check_login_in_db(login):  # проверка наличие логина в базе данных
-    con = sqlite3.connect('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/database.sqlite')
+    con = sqlite3.connect('work_with_db/database.sqlite')
     cur = con.cursor()
     result = cur.execute(f"""SELECT * FROM people WHERE login = '{login}'""").fetchall()
     con.close()
@@ -27,7 +27,7 @@ def check_login_in_db(login):  # проверка наличие логина в
 
 
 def check_cor_password_in_db_login(login, password):  # проверка наличия пароля в базе данных
-    con = sqlite3.connect('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/database.sqlite')
+    con = sqlite3.connect('work_with_db/database.sqlite')
     cur = con.cursor()
     result = cur.execute(f"""SELECT login FROM people WHERE password = '{password}'""").fetchall()
     con.close()
@@ -42,7 +42,7 @@ def check_cor_password_in_db_login(login, password):  # проверка нал�
 
 
 def check_cor_password_in_db_email(email, password):  # проверка наличия пароля в базе данных
-    con = sqlite3.connect('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/database.sqlite')
+    con = sqlite3.connect('work_with_db/database.sqlite')
     cur = con.cursor()
     result = cur.execute(f"""SELECT email FROM people WHERE password = '{password}'""").fetchall()
     con.close()
@@ -57,7 +57,7 @@ def check_cor_password_in_db_email(email, password):  # проверка нал�
 
 
 def check_email_in_db(email):
-    con = sqlite3.connect('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/database.sqlite')
+    con = sqlite3.connect('work_with_db/database.sqlite')
     cur = con.cursor()
     result = cur.execute(f"""SELECT * FROM people WHERE email = '{email}'""").fetchall()
     con.close()
@@ -66,7 +66,7 @@ def check_email_in_db(email):
 
 
 def change_password(login, new_password):
-    con = sqlite3.connect('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/database.sqlite')
+    con = sqlite3.connect('work_with_db/database.sqlite')
     cur = con.cursor()
     if login.count('@') == 0:
         cur.execute(f"""UPDATE people SET password = '{new_password}' WHERE login = '{login}'""")

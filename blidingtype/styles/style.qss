@@ -1,13 +1,13 @@
 @font-face {
     font-family: "Noto_Sans_Regular";
-    src: url("C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/fonts/NotoSans-Regular.ttf") format("truetype");
+    src: url("../fonts/NotoSans-Regular.ttf") format("truetype");
     font-style: normal;
     font-weight: normal;
 }
 
 @font-face {
     font-family: "Noto_Sans_ExtraBold";
-    src: url("C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/fonts/NotoSans-ExtraBold.ttf") format("truetype");
+    src: url("../fonts/NotoSans-ExtraBold.ttf") format("truetype");
     font-style: normal;
     font-weight: 800;
 }

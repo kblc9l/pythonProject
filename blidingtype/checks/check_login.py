@@ -1,4 +1,4 @@
-from blidingtype.work_with_db import registration
+from work_with_db import registration
 
 
 class LetterError(Exception):

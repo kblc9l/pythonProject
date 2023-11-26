@@ -1,7 +1,6 @@
 from email_validate import validate
-# https://docs-python.ru/packages/modul-validate-email-python/ ссылка на этот модуль проверки email
 
-from blidingtype.work_with_db import registration
+from work_with_db import registration
 
 
 class UnCorrectEmail(Exception):  # ошибка обратки её в регистрации
@@ -14,3 +13,4 @@ def check_email(email):  # функция проверки корректнос�
         raise UnCorrectEmail()
 
     registration.check_email_in_db(email)  # проверка наличия email в базе данных
+

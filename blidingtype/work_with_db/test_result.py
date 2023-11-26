@@ -2,12 +2,24 @@ import sqlite3
 
 
 def write_test_result_in_db(wpm, cpm, accuracy):
-    with open('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/data/login_data.txt', 'r',
-              encoding='utf8') as f:
-        login, password = [i.rstrip() for i in f.readlines()]
-        id1 = get_id_user(login, password)
     try:
-        con = sqlite3.connect('database.sqlite')
+
+        with open('../data/login_data.txt', 'r',
+                  encoding='utf8') as f:
+            login, password = [i.rstrip() for i in f.readlines()]
+            id1 = get_id_user(login, password)
+    except Exception as er:
+        print(er)
+
+        try:
+            with open('data/login_data.txt', 'r',
+                      encoding='utf8') as f:
+                login, password = [i.rstrip() for i in f.readlines()]
+                id1 = get_id_user(login, password)
+        except Exception as er:
+            print(er)
+    try:
+        con = sqlite3.connect('work_with_db/database.sqlite')
         cur = con.cursor()
         request = ("INSERT INTO result (people, wpm, cpm, accuracy) "
                    "VALUES") + f" (\'{id1}\', \'{wpm}\', \'{cpm}\', \'{accuracy}\')"
@@ -20,7 +32,7 @@ def write_test_result_in_db(wpm, cpm, accuracy):
 
 def get_id_user(login, password):
     try:
-        con = sqlite3.connect('C:/Users/Professional/PycharmProjects/pythonProject/blidingtype/database.sqlite')
+        con = sqlite3.connect('work_with_db/database.sqlite')
         cur = con.cursor()
         result = cur.execute(
             f"""SELECT id FROM people WHERE login = '{login}' and password = '{password}'""").fetchall()

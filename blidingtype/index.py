@@ -6,18 +6,18 @@ from PyQt5 import QtGui, QtCore
 from PyQt5.QtCore import QTimer, QEvent
 
 import colors
-from blidingtype.index_ui import Ui_MainWindow
+from index_ui import Ui_MainWindow
 from work_with_db import login as lg
 from checks import check_password, check_email, check_login
 from work_with_db import registration, test_result, profile
 
 color: str
 app = None
-SYS_PATH = 'C:/Users/Professional/PycharmProjects/pythonProject/blidingtype'  # абсолютный путь до файлов
+
 
 
 def change_color(button):
-    with open(f'{SYS_PATH}/data/color.txt', 'w',
+    with open(f'data/color.txt', 'w',
               encoding='utf8') as f:
         f.write(str(button.objectName().replace('change_color_', '')))
         f.close()
@@ -27,12 +27,12 @@ def change_color(button):
 
 def read_color():
     global color
-    with open(f'{SYS_PATH}/data/color.txt') as color:
+    with open(f'data/color.txt') as color:
         color = color.read()
 
 
 def change_setting():
-    with open(f'{SYS_PATH}/data/settings.txt') as settings:
+    with open(f'data/settings.txt') as settings:
         settings = [i.rstrip() for i in settings.readlines()]
         return settings
 
@@ -40,7 +40,7 @@ def change_setting():
 def check_login_people():
     global flag
     try:
-        with open(f'{SYS_PATH}/data/login_data.txt', 'r',
+        with open(f'data/login_data.txt', 'r',
                   encoding='utf8') as data_person:
             data = data_person.readlines()
             if len(data) == 2:
@@ -68,7 +68,7 @@ class LineEdit(qtw.QLineEdit):
     RIGHT_COUNT_LETTER = 0
     COUNT_WORDS = 0
     count_second = 0
-    interval_time = 60
+    interval_time = 5
     write = True
     level = 'easy'
 
@@ -124,7 +124,7 @@ class LineEdit(qtw.QLineEdit):
                 WindowIndex.generate_text_for_update(WindowIndex.singleton)
 
     def generate_string(self):  # генерация строки для given_text
-        with open(f'{SYS_PATH}/data/{self.level}_words.txt', 'r',
+        with open(f'data/{self.level}_words.txt', 'r',
                   encoding='utf8') as f:
             f = f.read().split()
             s = ''
@@ -178,12 +178,12 @@ def wrong_letter():
 # анимации кнопок в menu в main
 def enter_button_2(button):
     button.setIcon(QtGui.QIcon(
-        f'{SYS_PATH}/images/{color}/{button.objectName()[:-2]}_active.svg'))
+        f'images/{color}/{button.objectName()[:-2]}_active.svg'))
 
 
 def leave_button_2(button):
     button.setIcon(QtGui.QIcon(
-        f'{SYS_PATH}/images/{color}/{button.objectName()[:-2]}_inactive.svg'))
+        f'images/{color}/{button.objectName()[:-2]}_inactive.svg'))
 
 
 class WindowIndex(qtw.QMainWindow):  # класс приложения
@@ -224,10 +224,10 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
         if res == qtw.QMessageBox.Ok:  # если пользователь нажал Ok, то перезапускаем приложение
             WindowIndex.singleton.close()
             read_color()
-            style_file = colors.rewrite_qss(f'{SYS_PATH}/styles/style.qss', color)
+            style_file = colors.rewrite_qss(f'styles/style.qss', color)
             app.setStyleSheet(style_file)
             WindowIndex.singleton = WindowIndex()
-            WindowIndex.singleton.setWindowIcon(QtGui.QIcon(f'{SYS_PATH}/images/{color}/logo.svg'))
+            WindowIndex.singleton.setWindowIcon(QtGui.QIcon(f'images/{color}/logo.svg'))
             WindowIndex.singleton.setWindowTitle('Blind Typing')
         else:
             for i in WindowIndex.singleton.ui.color_page_container.children()[1:]:
@@ -238,68 +238,68 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
     def start():  # функция для первого создания приложения
         read_color()
         style_file = colors.rewrite_qss(
-            f'{SYS_PATH}/styles/style.qss',
+            f'styles/style.qss',
             color)
         app.setStyleSheet(style_file)
         WindowIndex.singleton = WindowIndex()
-        WindowIndex.singleton.setWindowIcon(QtGui.QIcon(f'{SYS_PATH}/images/{color}/logo.svg'))
+        WindowIndex.singleton.setWindowIcon(QtGui.QIcon(f'images/{color}/logo.svg'))
         WindowIndex.singleton.setWindowTitle('Blind Typing')
 
     def initUI(self):  # присваиваем иконкам значения
         self.ui.login_error.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/error_inactive.svg'))
+            f'images/{color}/error_inactive.svg'))
         self.ui.change_password_error.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/error_inactive.svg'))
+            f'images/{color}/error_inactive.svg'))
         self.ui.registration_error.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/error_inactive.svg'))
+            f'images/{color}/error_inactive.svg'))
         self.ui.logo_icon_1.setIcon(
-            QtGui.QIcon(f'{SYS_PATH}/images/{color}/logo.svg'))
+            QtGui.QIcon(f'images/{color}/logo.svg'))
         self.ui.logo_icon_2.setIcon(
-            QtGui.QIcon(f'{SYS_PATH}/images/{color}/logo.svg'))
+            QtGui.QIcon(f'images/{color}/logo.svg'))
         self.ui.preview_logo.setIcon(
-            QtGui.QIcon(f'{SYS_PATH}/images/{color}/logo_big.svg'))
+            QtGui.QIcon(f'images/{color}/logo_big.svg'))
         self.ui.login_show_password.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+            f'images/{color}/eye_inactive.svg'))
 
         self.ui.refrech_button.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/refresh_inactive.svg'))
+            f'images/{color}/refresh_inactive.svg'))
         self.ui.refrech_button_2.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/refresh_inactive.svg'))
+            f'images/{color}/refresh_inactive.svg'))
         self.ui.next_test_button.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/next_test_inactive.svg'))
+            f'images/{color}/next_test_inactive.svg'))
         self.ui.registration_show_password.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+            f'images/{color}/eye_inactive.svg'))
         self.ui.change_password_show_password.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+            f'images/{color}/eye_inactive.svg'))
 
         self.ui.test_1.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.test_1.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.test_1.objectName()[:-2]}_inactive.svg'))
         self.ui.lessons_1.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.lessons_1.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.lessons_1.objectName()[:-2]}_inactive.svg'))
         self.ui.colors_1.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.colors_1.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.colors_1.objectName()[:-2]}_inactive.svg'))
         self.ui.settings_1.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.settings_1.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.settings_1.objectName()[:-2]}_inactive.svg'))
         self.ui.about_1.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.about_1.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.about_1.objectName()[:-2]}_inactive.svg'))
         self.ui.profile_1.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.profile_1.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.profile_1.objectName()[:-2]}_inactive.svg'))
 
         self.ui.test_2.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.test_2.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.test_2.objectName()[:-2]}_inactive.svg'))
         self.ui.lessons_2.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.lessons_2.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.lessons_2.objectName()[:-2]}_inactive.svg'))
         self.ui.colors_2.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.colors_2.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.colors_2.objectName()[:-2]}_inactive.svg'))
         self.ui.settings_2.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.settings_2.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.settings_2.objectName()[:-2]}_inactive.svg'))
         self.ui.about_2.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.about_2.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.about_2.objectName()[:-2]}_inactive.svg'))
         self.ui.profile_2.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.profile_2.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.profile_2.objectName()[:-2]}_inactive.svg'))
 
         self.ui.burger_1.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.ui.burger_1.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.ui.burger_1.objectName()[:-2]}_inactive.svg'))
 
         self.ui.login_password_edit.installEventFilter(self)
         self.ui.login_show_password.clicked.connect(lambda x: self.change_echo_mode(self.ui.login_show_password))
@@ -324,9 +324,9 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
         self.ui.change_password_button.clicked.connect(self.go_to_change_password)
 
         self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
-        self.ui.login_show_password.setIcon(QtGui.QIcon(f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+        self.ui.login_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
 
-        with open(f'{SYS_PATH}/data/login_data.txt', 'r',
+        with open(f'data/login_data.txt', 'r',
                   encoding='utf8') as data_person:
             data = data_person.readlines()  # берём из файла сохранённый логин и пароль
         if data:
@@ -340,7 +340,7 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
         self.change_password_hide_error()
 
         self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
-        self.ui.change_password_show_password.setIcon(QtGui.QIcon(f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+        self.ui.change_password_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
 
     def go_to_registration(self):
         self.ui.main_container.setCurrentIndex(2)
@@ -349,7 +349,7 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
         self.ui.registration_login_button.clicked.connect(self.go_to_login)
 
         self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
-        self.ui.registration_show_password.setIcon(QtGui.QIcon(f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+        self.ui.registration_show_password.setIcon(QtGui.QIcon(f'images/{color}/eye_inactive.svg'))
 
     def go_to_main(self):
         global LINEEDIT
@@ -434,46 +434,46 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
             if self.ui.login_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
                 self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
                 self.ui.login_show_password.setIcon(QtGui.QIcon(
-                    f'{SYS_PATH}/images/{color}/eye_active.svg'))
+                    f'images/{color}/eye_active.svg'))
                 print('login_password_edit Normal')
             else:
                 self.ui.login_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
                 self.ui.login_show_password.setIcon(QtGui.QIcon(
-                    f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+                    f'images/{color}/eye_inactive.svg'))
                 print('login_password_edit Password')
             self.ui.login_password_edit.setFocus()
         elif button == self.ui.registration_show_password:
             if self.ui.registration_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
                 self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
                 self.ui.registration_show_password.setIcon(QtGui.QIcon(
-                    f'{SYS_PATH}/images/{color}/eye_active.svg'))
+                    f'images/{color}/eye_active.svg'))
                 print('registration_show_password Normal')
             else:
                 self.ui.registration_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
                 self.ui.registration_show_password.setIcon(QtGui.QIcon(
-                    f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+                    f'images/{color}/eye_inactive.svg'))
                 print('registration_show_password Password')
             self.ui.registration_password_edit.setFocus()
         elif button == self.ui.change_password_show_password:
             if self.ui.change_password_edit.echoMode() == qtw.QLineEdit.EchoMode.Password:
                 self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Normal)
                 self.ui.change_password_show_password.setIcon(QtGui.QIcon(
-                    f'{SYS_PATH}/images/{color}/eye_active.svg'))
+                    f'images/{color}/eye_active.svg'))
                 print('change_password_edit Normal')
             else:
                 self.ui.change_password_edit.setEchoMode(qtw.QLineEdit.EchoMode.Password)
                 self.ui.change_password_show_password.setIcon(QtGui.QIcon(
-                    f'{SYS_PATH}/images/{color}/eye_inactive.svg'))
+                    f'images/{color}/eye_inactive.svg'))
             self.ui.change_password_edit.setFocus()
             print('change_password_edit Password')
 
     def leave_button(self, button):
         button.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{button.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{button.objectName()[:-2]}_inactive.svg'))
         self.last_focus.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.last_focus.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.last_focus.objectName()[:-2]}_inactive.svg'))
         self.focus.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.focus.objectName()[:-2]}_active.svg'))
+            f'images/{color}/{self.focus.objectName()[:-2]}_active.svg'))
 
         style_active = """color: active;"""
         style_inactive = """color: inactive;"""
@@ -485,9 +485,9 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
 
     def enter_button(self, button):
         self.focus.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{self.focus.objectName()[:-2]}_inactive.svg'))
+            f'images/{color}/{self.focus.objectName()[:-2]}_inactive.svg'))
         button.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{button.objectName()[:-2]}_active.svg'))
+            f'images/{color}/{button.objectName()[:-2]}_active.svg'))
 
         style_active = """color: active;"""
         style_inactive = """color: inactive;"""
@@ -498,7 +498,7 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
 
     def select_focus(self, button):
         button.setIcon(QtGui.QIcon(
-            f'{SYS_PATH}/images/{color}/{button.objectName()[:-2]}_active.svg'))
+            f'images/{color}/{button.objectName()[:-2]}_active.svg'))
         style_active = colors.rewrite_qss_for_widget("""color: active;""", color)
         self.focus = button
         button.setStyleSheet(style_active)
@@ -540,7 +540,7 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
         if text_error == '':
             self.login_hide_error()
             self.go_to_main()
-            with open(f'{SYS_PATH}/data/login_data.txt', 'w',
+            with open(f'data/login_data.txt', 'w',
                       encoding='utf8') as data_person:
                 data_person.write(login + '\n')
                 data_person.write(password)
@@ -904,7 +904,7 @@ class WindowIndex(qtw.QMainWindow):  # класс приложения
             self.ui.keyboard_setting_radio_button.setChecked(False)
 
     def change_setting_2(self):  # запись в файл последнего состояния клавиатуры (show, hide) (True, False)
-        with open(f'{SYS_PATH}/data/settings.txt', 'w',
+        with open(f'data/settings.txt', 'w',
                   encoding='utf8') as settings:
             if self.ui.keyboard_setting_radio_button.isChecked():
                 settings.write('True')
